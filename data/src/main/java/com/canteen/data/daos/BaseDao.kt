@@ -15,9 +15,6 @@ interface BaseDao<in E : BaseEntity> {
     suspend fun insert(entity: E): Long
 
     @Insert
-    suspend fun insertAll(vararg entity: E)
-
-    @Insert
     suspend fun insertAll(entities: List<E>)
 
     @Update
