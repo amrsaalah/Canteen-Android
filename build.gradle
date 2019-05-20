@@ -8,7 +8,8 @@ buildscript {
         androidArchVersion = '2.0.0'
         roomVersion = '2.1.0-alpha04'
         coroutineVersion = '1.1.1'
-
+        workManagerVersion = '2.0.1'
+        assitedInjectVersion = '0.4.0'
 
         minSdk = 21
         targetSdk = 28
