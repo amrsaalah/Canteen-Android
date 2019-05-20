@@ -1,6 +1,7 @@
 package com.canteen.data.entities
 
 import androidx.room.*
+import java.util.*
 
 /**
  * Created by Amr Salah on 5/19/2019.
@@ -19,7 +20,10 @@ import androidx.room.*
     )]
 )
 data class Product(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") override val id: Int = 0,
     @ColumnInfo(name = "categoryId") val categoryId: Int = 0,
-    @ColumnInfo(name = "name") val name: String
+    @ColumnInfo(name = "name") val name: String,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") override val id: Int = 0,
+    @ColumnInfo(name = "createdAt") val createdAt: Date = Date(),
+    @ColumnInfo(name = "updatedAt") val updatedAt: Date? = null,
+    @ColumnInfo(name = "deletedAt") val deletedAt: Date? = null
 ) : BaseEntity

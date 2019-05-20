@@ -1,6 +1,7 @@
 package com.canteen.data.daos
 
 import androidx.room.Dao
+import androidx.room.Query
 import com.canteen.data.entities.Category
 
 /**
@@ -9,4 +10,6 @@ import com.canteen.data.entities.Category
 @Dao
 interface CategoryDao : BaseDao<Category>{
 
+    @Query("select * from  categories")
+    suspend fun getCategories(): List<Category>
 }

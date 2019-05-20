@@ -8,6 +8,13 @@ import javax.inject.Inject
  * Created by Amr Salah on 5/19/2019.
  */
 class ProductLocalDataSource @Inject constructor(private val productDao: ProductDao) : IProductLocalDataSource {
+    override suspend fun getAllProducts(): List<Product> {
+        return productDao.getProducts()
+    }
+
+    override suspend fun getProductsByCategoryId(categoryId: Int): List<Product> {
+        return productDao.getProductByCategoryId(categoryId)
+    }
 
     override suspend fun insert(entity: Product): Long {
         return productDao.insert(entity)

@@ -6,4 +6,8 @@ import com.canteen.data.localDataSource.BaseLocalDataSource
 /**
  * Created by Amr Salah on 5/19/2019.
  */
-interface IProductLocalDataSource : BaseLocalDataSource<Product>
+interface IProductLocalDataSource : BaseLocalDataSource<Product> {
+
+    suspend fun getAllProducts(): List<Product>
+    suspend fun getProductsByCategoryId(categoryId: Int): List<Product>
+}
