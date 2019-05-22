@@ -1,6 +1,9 @@
 package com.canteen.tasks
 
+import android.util.Log
+import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
+import com.canteen.tasks.workers.TestWorker
 import javax.inject.Inject
 
 /**
@@ -14,7 +17,9 @@ class TasksHandler @Inject constructor(private val workManager: WorkManager) {
     }
 
     fun startWorker() {
-
+        Log.d(TAG, "startWorker: ")
+        val request = OneTimeWorkRequest.Builder(TestWorker::class.java).build()
+        workManager.enqueue(request)
     }
 
 }

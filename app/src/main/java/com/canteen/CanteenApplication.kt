@@ -1,5 +1,7 @@
 package com.canteen
 
+import androidx.work.Configuration
+import androidx.work.WorkManager
 import com.canteen.di.DaggerAppComponent
 import com.canteen.tasks.di.CanteenWorkerFactory
 import dagger.android.AndroidInjector
@@ -16,15 +18,14 @@ class CanteenApplication: DaggerApplication() {
     lateinit var workerFactory: CanteenWorkerFactory
 
 
-//
-//    override fun onCreate() {
-//        super.onCreate()
-//
-//        val configuration = Configuration.Builder()
-//            .setWorkerFactory(workerFactory)
-//            .build()
-//        WorkManager.initialize(this, configuration)
-//    }
+    override fun onCreate() {
+        super.onCreate()
+
+        val configuration = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
+        WorkManager.initialize(this, configuration)
+    }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         return DaggerAppComponent.builder().application(this).build()

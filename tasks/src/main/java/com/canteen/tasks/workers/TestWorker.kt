@@ -22,6 +22,7 @@ class TestWorker @AssistedInject constructor(
         private const val TAG = "TestWorker"
     }
 
+
     override suspend fun doWork(): Result {
         Log.d(TAG, "doWork: ")
         return Result.success()

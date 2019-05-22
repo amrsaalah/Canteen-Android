@@ -13,6 +13,7 @@ import javax.inject.Provider
 class CanteenWorkerFactory @Inject constructor(
     private val creators: Map<Class<out ListenableWorker>, @JvmSuppressWildcards Provider<ChildWorkerFactory>>
 ) : WorkerFactory() {
+
     override fun createWorker(
         context: Context,
         workerClassName: String,

@@ -6,6 +6,7 @@ import com.canteen.base.BaseActivity
 import com.canteen.data.entities.Category
 import com.canteen.data.localDataSource.category.CategoryLocalDataSource
 import com.canteen.data.localDataSource.product.ProductLocalDataSource
+import com.canteen.tasks.TasksHandler
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,6 +23,9 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var productLocalDataSource: ProductLocalDataSource
 
+    @Inject
+    lateinit var tasksHandler: TasksHandler
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,6 +38,7 @@ class MainActivity : BaseActivity() {
             Log.d(TAG, "onCreate: " + productLocalDataSource.getProductsByCategoryId(1))
         }
 
+        tasksHandler.startWorker()
     }
 
 }
