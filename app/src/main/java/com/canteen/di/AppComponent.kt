@@ -3,6 +3,7 @@ package com.canteen.di
 import android.app.Application
 import androidx.databinding.DataBindingComponent
 import com.canteen.CanteenApplication
+import com.canteen.base.di.ViewModelModule
 import com.canteen.base.di.scopes.AppScope
 import com.canteen.dashboard.DashboardModule
 import com.canteen.data.di.RoomModule

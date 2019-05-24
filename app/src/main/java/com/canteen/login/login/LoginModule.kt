@@ -2,7 +2,7 @@ package com.canteen.login.login
 
 import androidx.lifecycle.ViewModel
 import com.canteen.base.di.scopes.FragmentScope
-import com.canteen.di.ViewModelKey
+import com.canteen.base.di.scopes.ViewModelKey
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

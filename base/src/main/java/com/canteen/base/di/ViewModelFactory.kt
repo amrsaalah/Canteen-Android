@@ -1,4 +1,4 @@
-package com.canteen.di
+package com.canteen.base.di
 
 import androidx.annotation.NonNull
 import androidx.lifecycle.ViewModel
