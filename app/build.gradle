@@ -103,6 +103,9 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
 
     implementation "androidx.lifecycle:lifecycle-extensions:$androidArchVersion"
+    kapt "androidx.lifecycle:lifecycle-compiler:$androidArchVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidArchVersion"
+    kapt "com.android.databinding:compiler:$dataBindingVersion"
 
     implementation "androidx.work:work-runtime-ktx:$workManagerVersion"
 

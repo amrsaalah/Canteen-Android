@@ -1,6 +1,7 @@
 package com.canteen.di
 
 import android.app.Application
+import androidx.databinding.DataBindingComponent
 import com.canteen.CanteenApplication
 import com.canteen.base.di.scopes.AppScope
 import com.canteen.dashboard.DashboardModule
@@ -23,11 +24,12 @@ import dagger.android.support.AndroidSupportInjectionModule
         RoomModule::class,
         TasksModule::class,
         NetworkModule::class,
+        ViewModelModule::class,
         DashboardModule::class,
         LoginModule::class
     ]
 )
-interface AppComponent : AndroidInjector<CanteenApplication> {
+interface AppComponent : AndroidInjector<CanteenApplication>, DataBindingComponent {
 
     @Component.Builder
     interface Builder {
