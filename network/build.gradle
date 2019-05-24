@@ -1,28 +1,21 @@
-apply plugin: 'com.android.application'
-
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+
 android {
-    compileSdkVersion 28
+    compileSdkVersion targetSdk
+
     defaultConfig {
-        applicationId "com.canteen"
         minSdkVersion minSdk
-        targetSdkVersion targetSdk
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
-
 
     androidExtensions {
         experimental = true
     }
-
 
 
     buildTypes {
@@ -37,8 +30,6 @@ android {
         debug {
             debuggable true
             minifyEnabled false
-            versionNameSuffix "-dev"
-            applicationIdSuffix ".debug"
 
             buildConfigField stringType, apiBaseUrlKey, "\"http://68.183.216.86/masters-dev/Backend/public/api/v1/\""
             buildConfigField stringType, imageBaseUrlKey, "\"http://68.183.216.86/masters-dev/Backend/public/\""
@@ -57,25 +48,28 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
 }
 
 dependencies {
 
     implementation project(":base")
-    implementation project(":data")
-    implementation project(":tasks")
-    implementation project(":network")
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation "androidx.core:core-ktx:$ktxCoreVersion"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$coroutineAdapterVersion"
+
+
+
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
+
 
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.google.dagger:dagger-android:$daggerVersion"
@@ -83,20 +77,11 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
-
-    kapt "androidx.room:room-compiler:$roomVersion"
-    implementation "androidx.room:room-runtime:$roomVersion"
-    implementation "androidx.room:room-coroutines:$roomVersion"
-
-
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
-
-    implementation "androidx.lifecycle:lifecycle-extensions:$androidArchVersion"
-
-    implementation "androidx.work:work-runtime-ktx:$workManagerVersion"
-
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
+repositories {
+    mavenCentral()
+}
+
+
+
+
