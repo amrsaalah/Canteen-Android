@@ -5,12 +5,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.canteen.R
 import com.canteen.base.BaseFragment
+import com.canteen.base.extensions.getViewModel
 import com.canteen.databinding.FragmentRegisterBinding
+import com.canteen.login.login.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_register.*
+import javax.inject.Inject
 
 /**
  * Created by Amr Salah on 5/24/2019.
@@ -22,6 +26,16 @@ class RegisterFragment : BaseFragment() {
 
     companion object {
         private const val TAG = "RegisterFragment"
+    }
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel by lazy {
+        getViewModel<LoginViewModel>(
+            requireActivity(),
+            viewModelFactory
+        )
     }
 
     override fun onCreateView(

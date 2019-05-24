@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.canteen.R
 import com.canteen.base.BaseFragment
+import com.canteen.base.extensions.getViewModel
 import com.canteen.databinding.FragmentLoginBinding
 import kotlinx.android.synthetic.main.fragment_login.*
 import javax.inject.Inject
@@ -19,17 +20,20 @@ import javax.inject.Inject
 class LoginFragment : BaseFragment() {
 
 
+    companion object {
+        private const val TAG = "LoginFragment"
+    }
+
     private lateinit var binding: FragmentLoginBinding
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel: LoginViewModel by lazy {
-        ViewModelProviders.of(this, viewModelFactory)[LoginViewModel::class.java]
-    }
-
-    companion object {
-        private const val TAG = "LoginFragment"
+    private val viewModel by lazy {
+        getViewModel<LoginViewModel>(
+            requireActivity(),
+            viewModelFactory
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +47,7 @@ class LoginFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
         return binding.root
     }
 
@@ -50,15 +55,8 @@ class LoginFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d(TAG, "onViewCreated: $this")
-
         linLayoutLogin.setOnClickListener {
-            findNavController().navigate(
-                LoginFragmentDirections.actionLoginFragmentToDashboardActivity(
-                    5
-                )
-            )
-            activity?.finish()
+            findNavController().navigate(R.id.registerFragment)
         }
     }
 }
