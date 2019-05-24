@@ -3,7 +3,10 @@ package com.canteen.di
 import android.app.Application
 import com.canteen.CanteenApplication
 import com.canteen.base.di.scopes.AppScope
+import com.canteen.dashboard.DashboardModule
 import com.canteen.data.di.RoomModule
+import com.canteen.login.LoginModule
+import com.canteen.network.di.NetworkModule
 import com.canteen.tasks.di.TasksModule
 import dagger.BindsInstance
 import dagger.Component
@@ -17,9 +20,11 @@ import dagger.android.support.AndroidSupportInjectionModule
 @Component(
     modules = [
         AndroidSupportInjectionModule::class,
-        ActivitiesModule::class,
         RoomModule::class,
-        TasksModule::class
+        TasksModule::class,
+        NetworkModule::class,
+        DashboardModule::class,
+        LoginModule::class
     ]
 )
 interface AppComponent : AndroidInjector<CanteenApplication> {
