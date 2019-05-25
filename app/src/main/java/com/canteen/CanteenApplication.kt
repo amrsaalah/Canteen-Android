@@ -1,5 +1,6 @@
 package com.canteen
 
+import androidx.databinding.DataBindingUtil
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import com.canteen.di.DaggerAppComponent
@@ -28,7 +29,10 @@ class CanteenApplication: DaggerApplication() {
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerAppComponent.builder().application(this).build()
+        val component = DaggerAppComponent.builder().application(this).build()
+        DataBindingUtil.setDefaultComponent(component)
+        component.inject(this)
+        return component
     }
 
 

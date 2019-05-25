@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionInflater
 import com.canteen.R
 import com.canteen.base.BaseFragment
 import com.canteen.base.extensions.getViewModel
@@ -36,6 +37,12 @@ class RegisterFragment : BaseFragment() {
             requireActivity(),
             viewModelFactory
         )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 
     override fun onCreateView(

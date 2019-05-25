@@ -5,13 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.canteen.R
 import com.canteen.base.BaseFragment
 import com.canteen.base.extensions.getViewModel
-import com.canteen.base.extensions.showToast
 import com.canteen.databinding.FragmentLoginBinding
 import kotlinx.android.synthetic.main.fragment_login.*
 import javax.inject.Inject
@@ -59,22 +59,21 @@ class LoginFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.login()
-
-        viewModel.password.observe(this, Observer {
-            Log.d(TAG, "onViewCreated: password $it ")
-        })
-        viewModel.toastMessage.observe(this, Observer {
-            Log.d(TAG, "onViewCreated: message $it")
-            showToast(it)
-        })
-
-        viewModel.user.observe(this, Observer {
-            showToast(it)
-        })
-
-        linLayoutLogin.setOnClickListener {
-            findNavController().navigate(R.id.registerFragment)
+        txtDontHaveAccount.setOnClickListener {
+            val extras = getSharedElementTransitionExtras()
+            findNavController().navigate(R.id.registerFragment, null, null, extras)
         }
+    }
+
+
+    private fun getSharedElementTransitionExtras(): FragmentNavigator.Extras {
+        return FragmentNavigatorExtras(
+            imgLogo to imgLogo.transitionName,
+            inputLayoutEmail to inputLayoutEmail.transitionName,
+            inputLayoutPassword to inputLayoutPassword.transitionName,
+            txtDontHaveAccount to txtDontHaveAccount.transitionName,
+            txtForgotPassword to txtForgotPassword.transitionName,
+            btnLogin to btnLogin.transitionName
+        )
     }
 }

@@ -11,6 +11,10 @@ android {
     defaultConfig {
         minSdkVersion minSdk
     }
+
+    dataBinding{
+        enabled = true
+    }
 }
 
 dependencies {
@@ -24,6 +28,8 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
     api "androidx.lifecycle:lifecycle-extensions:$androidArchVersion"
+
+    kapt "com.android.databinding:compiler:$dataBindingVersion"
 
 }
 

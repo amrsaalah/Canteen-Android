@@ -3,6 +3,8 @@ package com.canteen.di
 import android.app.Application
 import androidx.databinding.DataBindingComponent
 import com.canteen.CanteenApplication
+import com.canteen.base.bindingAdapters.ViewBindingAdapter
+import com.canteen.base.di.BindingAdapterModule
 import com.canteen.base.di.ViewModelModule
 import com.canteen.base.di.scopes.AppScope
 import com.canteen.dashboard.DashboardModule
@@ -29,6 +31,7 @@ import dagger.android.support.AndroidSupportInjectionModule
         NetworkModule::class,
         ViewModelModule::class,
         RepositoryModule::class,
+        BindingAdapterModule::class,
         PresenterModule::class,
         DashboardModule::class,
         LoginModule::class
@@ -36,6 +39,8 @@ import dagger.android.support.AndroidSupportInjectionModule
     ]
 )
 interface AppComponent : AndroidInjector<CanteenApplication>, DataBindingComponent {
+
+    override fun getViewBindingAdapter(): ViewBindingAdapter
 
     @Component.Builder
     interface Builder {

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -7,22 +9,103 @@
             name="viewModel"
             type="com.canteen.login.login.LoginViewModel" />
 
+        <import type="com.canteen.R" />
     </data>
 
     <LinearLayout
         android:id="@+id/linLayoutLogin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_marginTop="@dimen/dp40"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/dp20">
+
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher_background"
+            android:transitionName="logo" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayoutEmail"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp50"
+            android:hint="@string/email"
+            android:transitionName="email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayoutPassword"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp30"
+            android:hint="@string/password"
+            android:textDirection="locale"
+            android:transitionName="password"
+            app:passwordToggleDrawable="@drawable/selector_show_hide_password"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/black"
+            app:passwordToggleTintMode="src_atop">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <TextView
+            android:id="@+id/txtForgotPassword"
+            style="@style/TextButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:textSize="30sp" />
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/dp5"
+            android:text="@string/forgot_password"
+            android:textColor="#0D6FEC"
+            android:transitionName="forgotPassword" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogin"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp50"
+            android:layout_marginEnd="@dimen/dp10"
+            android:padding="@dimen/dp15"
+            android:text="@string/Login"
+            android:transitionName="button" />
+
+
+        <TextView
+            android:id="@+id/txtDontHaveAccount"
+            style="@style/TextButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp5"
+            android:textColor="@color/dark_grey"
+            android:transitionName="textButton"
+            app:firstText="@{@string/dont_have_account}"
+            app:secondColor="@{R.color.blue}"
+            app:secondText="@{@string/sign_up}"
+            tools:text="@string/dont_have_account" />
 
     </LinearLayout>
 </layout>
