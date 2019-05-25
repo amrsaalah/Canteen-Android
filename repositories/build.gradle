@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+
 apply plugin: 'kotlin-kapt'
+
 
 android {
     compileSdkVersion targetSdk
@@ -9,12 +11,14 @@ android {
         minSdkVersion minSdk
     }
 
+
 }
 
 dependencies {
 
     api project(":base")
     api project(":data")
+    api project(":network")
 
 
     implementation "com.google.dagger:dagger:$daggerVersion"
@@ -23,10 +27,9 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
-    api "androidx.work:work-runtime-ktx:$workManagerVersion"
-
-    api "com.squareup.inject:assisted-inject-annotations-dagger2:$assitedInjectVersion"
-    kapt "com.squareup.inject:assisted-inject-processor-dagger2:$assitedInjectVersion"
+}
+repositories {
+    mavenCentral()
 }
 
 

@@ -19,17 +19,17 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by Amr Salah on 5/22/2019.
  */
-@Module
+@Module(includes = [RemoteDataSourceModule::class, ServiceModule::class])
 class NetworkModule {
 
-    @Provides
     @AppScope
+    @Provides
     fun provideOkHttpInterceptors(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
-    @Provides
     @AppScope
+    @Provides
     fun okHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
 
         return OkHttpClient.Builder()
@@ -42,16 +42,16 @@ class NetworkModule {
     }
 
 
-    @Provides
     @AppScope
+    @Provides
     fun provideGsonFactory(): Gson {
-        return GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+        return GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create()
     }
 
-    @Provides
     @AppScope
+    @Provides
     fun provideRetrofitClient(@NonNull okHttpClient: OkHttpClient, gson: Gson): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.API_BASE_URL)

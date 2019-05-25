@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 interface ILoginViewModel {
     val email: MutableLiveData<String>
     val password: MutableLiveData<String>
+    val user: MutableLiveData<String>
 
     fun login()
     fun forgotPasswordTextClicked()

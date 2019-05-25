@@ -23,4 +23,8 @@ abstract class LoginModule {
     @ViewModelKey(LoginViewModel::class)
     abstract fun bindLoginViewModel(loginViewModel: LoginViewModel): ViewModel
 
+
+    @Binds
+    abstract fun bindIViewModel(loginViewModel: LoginViewModel): ILoginViewModel
+
 }

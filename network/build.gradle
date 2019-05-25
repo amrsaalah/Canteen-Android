@@ -1,8 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
 
 
@@ -13,38 +11,14 @@ android {
         minSdkVersion minSdk
     }
 
-    androidExtensions {
-        experimental = true
-    }
-
-
     buildTypes {
 
-        def apiBaseUrlKey = "API_BASE_URL"
-        def imageBaseUrlKey = "IMAGE_BASE_URL"
-        def appNameKey = "app_name"
-        def appName = "Canteen"
-        def stringType = "String"
-        def stringResourceValue = "string"
-
         debug {
-            debuggable true
-            minifyEnabled false
-
-            buildConfigField stringType, apiBaseUrlKey, "\"http://68.183.216.86/masters-dev/Backend/public/api/v1/\""
-            buildConfigField stringType, imageBaseUrlKey, "\"http://68.183.216.86/masters-dev/Backend/public/\""
-            resValue stringResourceValue, appNameKey, "${appName}.debug"
+            buildConfigField "String", "API_BASE_URL", "\"http://68.183.216.86/masters-dev/Backend/public/api/v1/\""
         }
 
-
         release {
-            debuggable true
-            minifyEnabled false
-
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField stringType, apiBaseUrlKey, "\"http://68.183.216.86/masters-test/Backend/public/api/v1/\""
-            buildConfigField stringType, imageBaseUrlKey, "\"http://68.183.216.86/masters-test/Backend/public/\""
-            resValue stringResourceValue, appNameKey, "${appName}"
+            buildConfigField "String", "API_BASE_URL", "\"http://68.183.216.86/masters-dev/Backend/public/api/v1/\""
         }
     }
 
@@ -52,22 +26,13 @@ android {
 
 dependencies {
 
-    implementation project(":base")
+    api project(":base")
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
-    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
-    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$coroutineAdapterVersion"
-
-
-
-
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
+    api "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    api "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    api "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    api "com.squareup.okhttp3:okhttp:$okHttpVersion"
+    api "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$coroutineAdapterVersion"
 
 
     implementation "com.google.dagger:dagger:$daggerVersion"
@@ -76,9 +41,6 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
-}
-repositories {
-    mavenCentral()
 }
 
 

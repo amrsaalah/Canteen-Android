@@ -5,11 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.canteen.R
 import com.canteen.base.BaseFragment
 import com.canteen.base.extensions.getViewModel
+import com.canteen.base.extensions.showToast
 import com.canteen.databinding.FragmentLoginBinding
 import kotlinx.android.synthetic.main.fragment_login.*
 import javax.inject.Inject
@@ -28,6 +30,7 @@ class LoginFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
 
     private val viewModel by lazy {
         getViewModel<LoginViewModel>(
@@ -48,12 +51,27 @@ class LoginFragment : BaseFragment() {
     ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.login()
+
+        viewModel.password.observe(this, Observer {
+            Log.d(TAG, "onViewCreated: password $it ")
+        })
+        viewModel.toastMessage.observe(this, Observer {
+            Log.d(TAG, "onViewCreated: message $it")
+            showToast(it)
+        })
+
+        viewModel.user.observe(this, Observer {
+            showToast(it)
+        })
 
         linLayoutLogin.setOnClickListener {
             findNavController().navigate(R.id.registerFragment)

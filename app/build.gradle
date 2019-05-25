@@ -23,36 +23,26 @@ android {
 
     }
 
-
     dataBinding{
         enabled = true
     }
-
 
     androidExtensions {
         experimental = true
     }
 
 
-
     buildTypes {
 
-        def apiBaseUrlKey = "API_BASE_URL"
-        def imageBaseUrlKey = "IMAGE_BASE_URL"
-        def appNameKey = "app_name"
         def appName = "Canteen"
-        def stringType = "String"
-        def stringResourceValue = "string"
-
         debug {
             debuggable true
             minifyEnabled false
             versionNameSuffix "-dev"
             applicationIdSuffix ".debug"
 
-            buildConfigField stringType, apiBaseUrlKey, "\"http://68.183.216.86/masters-dev/Backend/public/api/v1/\""
-            buildConfigField stringType, imageBaseUrlKey, "\"http://68.183.216.86/masters-dev/Backend/public/\""
-            resValue stringResourceValue, appNameKey, "${appName}.debug"
+            buildConfigField "String", "IMAGE_BASE_URL", "\"http://68.183.216.86/masters-dev/Backend/public/\""
+            resValue "string", "app_name", "${appName}.debug"
         }
 
 
@@ -61,9 +51,8 @@ android {
             minifyEnabled false
 
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField stringType, apiBaseUrlKey, "\"http://68.183.216.86/masters-test/Backend/public/api/v1/\""
-            buildConfigField stringType, imageBaseUrlKey, "\"http://68.183.216.86/masters-test/Backend/public/\""
-            resValue stringResourceValue, appNameKey, "${appName}"
+            buildConfigField "String", "IMAGE_BASE_URL", "\"http://68.183.216.86/masters-dev/Backend/public/\""
+            resValue "string", "app_name", "${appName}.debug"
         }
     }
 
@@ -80,9 +69,9 @@ dependencies {
     implementation project(":data")
     implementation project(":tasks")
     implementation project(":network")
+    implementation project(":presenters")
+    implementation project(":repositories")
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation "androidx.core:core-ktx:$ktxCoreVersion"
@@ -94,30 +83,17 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
 
-    kapt "androidx.room:room-compiler:$roomVersion"
-    implementation "androidx.room:room-runtime:$roomVersion"
-    implementation "androidx.room:room-ktx:$roomVersion"
-
-
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
 
     implementation "androidx.lifecycle:lifecycle-extensions:$androidArchVersion"
     kapt "androidx.lifecycle:lifecycle-compiler:$androidArchVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidArchVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$androidArchVersion"
     kapt "com.android.databinding:compiler:$dataBindingVersion"
-
-    implementation "androidx.work:work-runtime-ktx:$workManagerVersion"
-
 
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
-
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
-    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
-    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$coroutineAdapterVersion"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
