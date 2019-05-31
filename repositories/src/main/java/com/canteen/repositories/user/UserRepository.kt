@@ -1,9 +1,9 @@
 package com.canteen.repositories.user
 
-import com.canteen.base.di.scopes.AppScope
+import com.canteen.base.Session
+import com.canteen.base.UpdateUser
+import com.canteen.base.User
 import com.canteen.data.localDataSource.entry.IEntryLocalDataSource
-import com.canteen.data.preferences.UpdateUser
-import com.canteen.data.preferences.User
 import com.canteen.data.preferences.UserPreferences
 import com.canteen.network.api.LoginRequest
 import com.canteen.network.api.LoginResponse
@@ -15,23 +15,29 @@ import javax.inject.Inject
  * Created by Amr Salah on 5/25/2019.
  */
 
-@AppScope
+
 class UserRepository @Inject constructor(
     private val userRemoteDataSource: IUserRemoteDataSource,
     private val userPreferences: UserPreferences,
-    private val entryLocalDataSource: IEntryLocalDataSource
+    private val entryLocalDataSource: IEntryLocalDataSource,
+    private val session: Session
 ) : BaseRepository(entryLocalDataSource), IUserRepository {
 
     override suspend fun login(username: String, password: String): LoginResponse {
         return userRemoteDataSource.login(LoginRequest(username, password))
     }
 
+    companion object {
+        private const val TAG = "UserRepository"
+    }
 
-    var currentUser: User? = initUser()
+    init {
+        session.currentUser = initUser()
+    }
 
 
     override fun createUserIfNotExist(user: User) {
-        if (this.currentUser == null) {
+        if (session.currentUser == null) {
             createUser(user)
         }
     }
@@ -39,23 +45,23 @@ class UserRepository @Inject constructor(
     override fun updateUser(user: UpdateUser) {
         user.isVerified?.let {
             userPreferences.setUserIsVerified(it)
-            this.currentUser?.isVerified = it
+            session.currentUser?.isVerified = it
         }
 
         user.name?.let {
             userPreferences.setUserName(it)
-            this.currentUser?.name = it
+            session.currentUser?.name = it
         }
 
         user.token?.let {
             userPreferences.setUserToken(it)
-            this.currentUser?.token = it
+            session.currentUser?.token = it
         }
     }
 
     override fun clearUser() {
         userPreferences.clearUser()
-        this.currentUser = null
+        session.currentUser = null
     }
 
     private fun initUser(): User? {
@@ -75,7 +81,7 @@ class UserRepository @Inject constructor(
         userPreferences.setUserIsVerified(user.isVerified)
         userPreferences.setUserName(user.name)
         userPreferences.setUserToken(user.token)
-        this.currentUser = user
+        session.currentUser = user
     }
 
 }

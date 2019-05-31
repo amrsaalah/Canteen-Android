@@ -1,7 +1,7 @@
 package com.canteen.repositories.user
 
-import com.canteen.data.preferences.UpdateUser
-import com.canteen.data.preferences.User
+import com.canteen.base.UpdateUser
+import com.canteen.base.User
 import com.canteen.network.api.LoginResponse
 
 /**

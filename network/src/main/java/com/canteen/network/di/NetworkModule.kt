@@ -1,6 +1,7 @@
 package com.canteen.network.di
 
 import androidx.annotation.NonNull
+import com.canteen.base.Session
 import com.canteen.base.di.scopes.AppScope
 import com.canteen.base.utils.Constants
 import com.canteen.network.BuildConfig
@@ -30,10 +31,13 @@ class NetworkModule {
 
     @AppScope
     @Provides
-    fun okHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun okHttpClient(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        authInterceptor: AuthInterceptor
+    ): OkHttpClient {
 
         return OkHttpClient.Builder()
-            .addInterceptor(AuthInterceptor())
+            .addInterceptor(authInterceptor)
             .addInterceptor(httpLoggingInterceptor)
             .connectTimeout(Constants.CONNECT_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(Constants.WRITE_TIMEOUT, TimeUnit.SECONDS)
@@ -61,4 +65,10 @@ class NetworkModule {
             .build()
     }
 
+
+    @AppScope
+    @Provides
+    fun provideAuthInterceptor(session: Session): AuthInterceptor {
+        return AuthInterceptor(session)
+    }
 }

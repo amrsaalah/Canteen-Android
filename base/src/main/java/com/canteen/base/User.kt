@@ -1,4 +1,4 @@
-package com.canteen.data.preferences
+package com.canteen.base
 
 /**
  * Created by Amr Salah on 5/27/2019.
