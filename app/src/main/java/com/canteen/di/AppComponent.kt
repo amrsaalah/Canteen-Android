@@ -4,11 +4,13 @@ import android.app.Application
 import androidx.databinding.DataBindingComponent
 import com.canteen.CanteenApplication
 import com.canteen.base.bindingAdapters.ViewBindingAdapter
+import com.canteen.base.di.BaseModule
 import com.canteen.base.di.BindingAdapterModule
 import com.canteen.base.di.ViewModelModule
 import com.canteen.base.di.scopes.AppScope
 import com.canteen.dashboard.DashboardModule
 import com.canteen.data.di.RoomModule
+import com.canteen.data.preferences.PreferencesModule
 import com.canteen.login.LoginModule
 import com.canteen.network.di.NetworkModule
 import com.canteen.presenters.di.PresenterModule
@@ -26,11 +28,13 @@ import dagger.android.support.AndroidSupportInjectionModule
 @Component(
     modules = [
         AndroidSupportInjectionModule::class,
+        BaseModule::class,
         RoomModule::class,
         TasksModule::class,
         NetworkModule::class,
         ViewModelModule::class,
         RepositoryModule::class,
+        PreferencesModule::class,
         BindingAdapterModule::class,
         PresenterModule::class,
         DashboardModule::class,

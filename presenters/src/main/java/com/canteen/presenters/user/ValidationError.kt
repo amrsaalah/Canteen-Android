@@ -1,4 +1,4 @@
-package com.canteen.presenters.login
+package com.canteen.presenters.user
 
 /**
  * Created by Amr Salah on 5/25/2019.

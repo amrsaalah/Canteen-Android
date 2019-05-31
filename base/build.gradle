@@ -15,6 +15,10 @@ android {
     dataBinding{
         enabled = true
     }
+
+    kotlinOptions.freeCompilerArgs += [
+            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"]
 }
 
 dependencies {
@@ -28,6 +32,10 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
     api "androidx.lifecycle:lifecycle-extensions:$androidArchVersion"
+
+
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
 
     kapt "com.android.databinding:compiler:$dataBindingVersion"
 

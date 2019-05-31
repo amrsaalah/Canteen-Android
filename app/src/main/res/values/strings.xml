@@ -5,4 +5,8 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="dont_have_account">Don\'t have an account?</string>
     <string name="sign_up">Sign up</string>
+    <string name="categories">Categories</string>
+    <string name="see_all">See All</string>
+    <string name="featured_masters">Trending Products</string>
+    <string name="top_masters">New Products</string>
 </resources>

@@ -12,8 +12,9 @@ import java.util.*
 @Entity(tableName = "categories")
 data class Category(
     @ColumnInfo(name = "name") val name: String,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") override val id: Int = 0,
+    @ColumnInfo(name = "remoteId") val remoteId: String? = null,
     @ColumnInfo(name = "createdAt") val createdAt: Date = Date(),
     @ColumnInfo(name = "updatedAt") val updatedAt: Date? = null,
-    @ColumnInfo(name = "deletedAt") val deletedAt: Date? = null,
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") override val id: Int = 0
+    @ColumnInfo(name = "deletedAt") val deletedAt: Date? = null
 ) : BaseEntity

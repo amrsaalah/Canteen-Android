@@ -3,15 +3,15 @@ package com.canteen.login.login
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.canteen.base.BaseViewModel
-import com.canteen.presenters.login.ILoginPresenter
-import com.canteen.presenters.login.ValidationError
+import com.canteen.presenters.user.IUserPresenter
+import com.canteen.presenters.user.ValidationError
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
  * Created by Amr Salah on 5/24/2019.
  */
-class LoginViewModel @Inject constructor(private val presenter: ILoginPresenter) : BaseViewModel(),
+class LoginViewModel @Inject constructor(private val presenter: IUserPresenter) : BaseViewModel(),
     ILoginViewModel {
 
     companion object {

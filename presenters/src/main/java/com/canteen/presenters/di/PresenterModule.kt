@@ -1,7 +1,11 @@
 package com.canteen.presenters.di
 
-import com.canteen.presenters.login.ILoginPresenter
-import com.canteen.presenters.login.LoginPresenter
+import com.canteen.presenters.category.CategoryPresenter
+import com.canteen.presenters.category.ICategoryPresenter
+import com.canteen.presenters.product.IProductPresenter
+import com.canteen.presenters.product.ProductPresenter
+import com.canteen.presenters.user.IUserPresenter
+import com.canteen.presenters.user.UserPresenter
 import dagger.Binds
 import dagger.Module
 
@@ -12,5 +16,12 @@ import dagger.Module
 abstract class PresenterModule {
 
     @Binds
-    abstract fun bindLoginPresenter(loginPresenter: LoginPresenter): ILoginPresenter
+    abstract fun bindUserPresenter(loginPresenter: UserPresenter): IUserPresenter
+
+    @Binds
+    abstract fun bindCategoryPresenter(loginPresenter: CategoryPresenter): ICategoryPresenter
+
+
+    @Binds
+    abstract fun bindProductPresenter(productPresenter: ProductPresenter): IProductPresenter
 }

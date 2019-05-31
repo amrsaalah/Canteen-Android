@@ -14,11 +14,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".login.LoginActivity">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
 
@@ -29,7 +25,11 @@
             android:exported="false" />
 
         <activity android:name=".dashboard.DashboardActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 

@@ -5,16 +5,15 @@ import androidx.room.Room
 import com.canteen.base.di.scopes.AppScope
 import com.canteen.data.CanteenDatabase
 import com.canteen.data.daos.CategoryDao
+import com.canteen.data.daos.EntryDao
 import com.canteen.data.daos.ProductDao
-import com.canteen.data.localDataSource.category.CategoryLocalDataSourceModule
-import com.canteen.data.localDataSource.product.ProductLocalDataSourceModule
 import dagger.Module
 import dagger.Provides
 
 /**
  * Created by Amr Salah on 5/19/2019.
  */
-@Module(includes = [CategoryLocalDataSourceModule::class, ProductLocalDataSourceModule::class])
+@Module(includes = [LocalDataSourceModule::class])
 class RoomModule{
 
     @AppScope
@@ -36,4 +35,10 @@ class RoomModule{
         return db.categoryDao()
     }
 
+
+    @AppScope
+    @Provides
+    fun provideEntryDao(db: CanteenDatabase): EntryDao {
+        return db.entryDao()
+    }
 }

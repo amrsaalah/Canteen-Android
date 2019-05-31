@@ -1,6 +1,5 @@
-package com.canteen.presenters.login
+package com.canteen.presenters.user
 
-import com.canteen.base.BasePresenter
 import com.canteen.repositories.user.IUserRepository
 import javax.inject.Inject
 
@@ -9,11 +8,11 @@ import javax.inject.Inject
  */
 
 
-class LoginPresenter @Inject constructor(private val userRepository: IUserRepository) :
-    BasePresenter(), ILoginPresenter {
+class UserPresenter @Inject constructor(private val userRepository: IUserRepository) :
+    IUserPresenter {
 
     companion object {
-        private const val TAG = "LoginPresenter"
+        private const val TAG = "UserPresenter"
     }
 
 

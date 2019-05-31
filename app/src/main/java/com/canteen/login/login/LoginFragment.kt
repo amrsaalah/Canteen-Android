@@ -33,10 +33,7 @@ class LoginFragment : BaseFragment() {
 
 
     private val viewModel by lazy {
-        getViewModel<LoginViewModel>(
-            requireActivity(),
-            viewModelFactory
-        )
+        getViewModel<LoginViewModel>(requireActivity(), viewModelFactory)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -20,9 +20,13 @@ import java.util.*
     )]
 )
 data class Product(
-    @ColumnInfo(name = "categoryId") val categoryId: Int = 0,
     @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "description") val description: String,
+    @ColumnInfo(name = "categoryId") val categoryId: Int,
+    @ColumnInfo(name = "price") val price: Double,
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") override val id: Int = 0,
+    @ColumnInfo(name = "remoteId") val remoteId: String? = null,
+    @ColumnInfo(name = "imageUrl") val imageUrl: String? = null,
     @ColumnInfo(name = "createdAt") val createdAt: Date = Date(),
     @ColumnInfo(name = "updatedAt") val updatedAt: Date? = null,
     @ColumnInfo(name = "deletedAt") val deletedAt: Date? = null
