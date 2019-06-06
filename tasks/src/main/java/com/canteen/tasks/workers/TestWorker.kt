@@ -28,6 +28,7 @@ class TestWorker @AssistedInject constructor(
         return Result.success()
     }
 
+
     @AssistedInject.Factory
     interface Factory : ChildWorkerFactory
 

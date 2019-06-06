@@ -2,6 +2,7 @@ package com.canteen.repositories.user
 
 import com.canteen.base.UpdateUser
 import com.canteen.base.User
+import com.canteen.base.response.Resource
 import com.canteen.network.api.LoginResponse
 
 /**
@@ -10,7 +11,7 @@ import com.canteen.network.api.LoginResponse
 
 interface IUserRepository {
 
-    suspend fun login(username: String, password: String): LoginResponse
+    suspend fun login(username: String, password: String): Resource<LoginResponse>
 
     fun createUserIfNotExist(user: User)
     fun updateUser(user: UpdateUser)

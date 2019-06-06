@@ -3,6 +3,7 @@ package com.canteen.repositories.user
 import com.canteen.base.Session
 import com.canteen.base.UpdateUser
 import com.canteen.base.User
+import com.canteen.base.response.Resource
 import com.canteen.data.localDataSource.entry.IEntryLocalDataSource
 import com.canteen.data.preferences.UserPreferences
 import com.canteen.network.api.LoginRequest
@@ -23,9 +24,7 @@ class UserRepository @Inject constructor(
     private val session: Session
 ) : BaseRepository(entryLocalDataSource), IUserRepository {
 
-    override suspend fun login(username: String, password: String): LoginResponse {
-        return userRemoteDataSource.login(LoginRequest(username, password))
-    }
+
 
     companion object {
         private const val TAG = "UserRepository"
@@ -33,6 +32,11 @@ class UserRepository @Inject constructor(
 
     init {
         session.currentUser = initUser()
+    }
+
+
+    override suspend fun login(username: String, password: String): Resource<LoginResponse> {
+        return userRemoteDataSource.login(LoginRequest(username, password))
     }
 
 

@@ -1,6 +1,7 @@
 package com.canteen.presenters.user
 
 import com.canteen.repositories.user.IUserRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -32,6 +33,7 @@ class UserPresenter @Inject constructor(private val userRepository: IUserReposit
     }
 
     override suspend fun attemptLogin(email: String, password: String) {
-        userRepository.login(email, password)
+        val response = userRepository.login(email, password)
+        Timber.d(response.toString())
     }
 }

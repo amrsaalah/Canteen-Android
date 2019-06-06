@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.canteen">
 
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".CanteenApplication"
         android:allowBackup="true"
@@ -14,7 +17,11 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".login.LoginActivity">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 
@@ -25,11 +32,7 @@
             android:exported="false" />
 
         <activity android:name=".dashboard.DashboardActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
 

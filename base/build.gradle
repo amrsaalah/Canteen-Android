@@ -37,6 +37,12 @@ dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
 
+    api 'com.jakewharton.timber:timber:4.7.1'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidArchVersion"
+
+
+    api "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
     kapt "com.android.databinding:compiler:$dataBindingVersion"
 
 }

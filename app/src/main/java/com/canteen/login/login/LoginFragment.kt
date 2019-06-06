@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.canteen.R
 import com.canteen.base.BaseFragment
 import com.canteen.base.extensions.getViewModel
+import com.canteen.base.extensions.showToast
 import com.canteen.databinding.FragmentLoginBinding
 import kotlinx.android.synthetic.main.fragment_login.*
 import javax.inject.Inject
@@ -55,6 +57,13 @@ class LoginFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.login()
+
+
+        viewModel.toastMessage.observe(this, Observer {
+            showToast(it)
+        })
 
         txtDontHaveAccount.setOnClickListener {
             val extras = getSharedElementTransitionExtras()

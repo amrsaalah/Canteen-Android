@@ -4,11 +4,12 @@ import androidx.annotation.NonNull
 import com.canteen.base.Session
 import com.canteen.base.di.scopes.AppScope
 import com.canteen.base.utils.Constants
+import com.canteen.base.utils.EventBus
 import com.canteen.network.BuildConfig
 import com.canteen.network.interceptors.AuthInterceptor
+import com.canteen.network.interceptors.ErrorInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -33,11 +34,13 @@ class NetworkModule {
     @Provides
     fun okHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
-        authInterceptor: AuthInterceptor
+        authInterceptor: AuthInterceptor,
+        errorInterceptor: ErrorInterceptor
     ): OkHttpClient {
 
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
+            .addInterceptor(errorInterceptor)
             .addInterceptor(httpLoggingInterceptor)
             .connectTimeout(Constants.CONNECT_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(Constants.WRITE_TIMEOUT, TimeUnit.SECONDS)
@@ -60,8 +63,7 @@ class NetworkModule {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.API_BASE_URL)
             .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create(gson)) // Serialize Objects
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 
@@ -70,5 +72,12 @@ class NetworkModule {
     @Provides
     fun provideAuthInterceptor(session: Session): AuthInterceptor {
         return AuthInterceptor(session)
+    }
+
+
+    @AppScope
+    @Provides
+    fun provideErrorInterceptor(eventBus: EventBus): ErrorInterceptor {
+        return ErrorInterceptor(eventBus)
     }
 }

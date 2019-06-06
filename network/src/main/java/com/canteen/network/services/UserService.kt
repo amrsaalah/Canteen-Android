@@ -2,6 +2,8 @@ package com.canteen.network.services
 
 import com.canteen.network.api.LoginRequest
 import com.canteen.network.api.LoginResponse
+import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.POST
 
 /**
@@ -9,6 +11,6 @@ import retrofit2.http.POST
  */
 interface UserService {
 
-    @POST
-    suspend fun login(request: LoginRequest): LoginResponse
+    @POST("authenticate")
+    suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 }

@@ -3,6 +3,7 @@ package com.canteen.login.login
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.canteen.base.BaseViewModel
+import com.canteen.base.utils.EventBus
 import com.canteen.presenters.user.IUserPresenter
 import com.canteen.presenters.user.ValidationError
 import kotlinx.coroutines.launch
@@ -11,7 +12,10 @@ import javax.inject.Inject
 /**
  * Created by Amr Salah on 5/24/2019.
  */
-class LoginViewModel @Inject constructor(private val presenter: IUserPresenter) : BaseViewModel(),
+class LoginViewModel @Inject constructor(
+    private val presenter: IUserPresenter,
+    private val eventBus: EventBus
+) : BaseViewModel(eventBus),
     ILoginViewModel {
 
     companion object {
@@ -24,7 +28,7 @@ class LoginViewModel @Inject constructor(private val presenter: IUserPresenter) 
     override val user: MutableLiveData<String> = MutableLiveData()
 
     init {
-        email.value = "123"
+        email.value = "amr@gmail"
         password.value = "123"
     }
 
@@ -33,7 +37,7 @@ class LoginViewModel @Inject constructor(private val presenter: IUserPresenter) 
         val errors = presenter.checkLoginValidation(email.value, password.value)
         if (errors.isEmpty()) {
             viewModelScope.launch {
-                // presenter.attemptLogin(email.value!! , password.value!!)
+                presenter.attemptLogin(email.value!!, password.value!!)
             }
         } else {
             for (error in errors) {

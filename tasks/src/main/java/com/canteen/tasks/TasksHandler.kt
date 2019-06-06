@@ -1,6 +1,8 @@
 package com.canteen.tasks
 
 import android.util.Log
+import androidx.work.Constraints
+import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.canteen.tasks.workers.TestWorker
@@ -16,9 +18,12 @@ class TasksHandler @Inject constructor(private val workManager: WorkManager) {
         private const val TAG = "TasksHandler"
     }
 
+
     fun startWorker() {
         Log.d(TAG, "startWorker: ")
-        val request = OneTimeWorkRequest.Builder(TestWorker::class.java).build()
+        val request = OneTimeWorkRequest.Builder(TestWorker::class.java)
+            .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
+            .build()
         workManager.enqueue(request)
     }
 

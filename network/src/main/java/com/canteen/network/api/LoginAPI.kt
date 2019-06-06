@@ -5,4 +5,4 @@ package com.canteen.network.api
  */
 data class LoginRequest(val username: String, val password: String)
 
-data class LoginResponse(val message: String)
+data class LoginResponse(val token: String)
