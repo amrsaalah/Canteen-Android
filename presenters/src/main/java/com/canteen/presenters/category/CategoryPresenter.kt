@@ -1,9 +1,9 @@
 package com.canteen.presenters.category
 
 import com.canteen.base.BasePresenter
-import com.canteen.base.response.Resource
 import com.canteen.base.utils.EventBus
-import com.canteen.data.entities.Category
+import com.canteen.presenters.R
+import com.canteen.presenters.displayModels.category.CategoryItem
 import com.canteen.repositories.category.ICategoryRepository
 import com.canteen.repositories.product.IProductRepository
 import com.canteen.repositories.user.IUserRepository
@@ -22,12 +22,10 @@ class CategoryPresenter @Inject constructor(
 ) : BasePresenter(),
     ICategoryPresenter {
 
-    companion object {
-        private const val TAG = "CategoryPresenter"
-    }
 
-    override suspend fun getCategories(): Resource<List<Category>> {
-        TODO()
+    override suspend fun getCategories(): List<CategoryItem> {
+        val categories = categoryRepository.getAllCategories()
+        return categories.map { CategoryItem(it.id, it.name, it.imgUrl, R.drawable.placeholder) }
     }
 
 }

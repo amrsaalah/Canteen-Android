@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.canteen.base.BaseFragment
 import com.canteen.base.extensions.getViewModel
 import com.canteen.databinding.FragmentHomeBinding
+import kotlinx.android.synthetic.main.fragment_home.*
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -29,6 +33,10 @@ class HomeFragment : BaseFragment() {
         getViewModel<HomeViewModel>(requireActivity(), viewModelFactory)
     }
 
+    private val categoryAdapter by lazy {
+        CategoryAdapter()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,6 +49,14 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel
+
+        recyclerViewCategories.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewCategories.adapter = categoryAdapter
+
+        viewModel.categories.observe(this, Observer {
+            Timber.d(it.toString())
+            categoryAdapter.submitList(it)
+        })
     }
 }

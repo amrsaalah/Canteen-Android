@@ -80,6 +80,11 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.google.android.material:material:$designLibraryVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
+
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+
+
 
     implementation "androidx.core:core-ktx:$ktxCoreVersion"
 

@@ -10,5 +10,5 @@ interface IEntryLocalDataSource : BaseLocalDataSource<Entry> {
 
     suspend fun getAllEntries(): List<Entry>
     suspend fun getEntriesByApiAndStatus(api: Int, status: Int): List<Entry>
-    suspend fun getLatestEntryByApi(api: Int): Entry
+    suspend fun getLatestEntryByApi(api: Int): Entry?
 }

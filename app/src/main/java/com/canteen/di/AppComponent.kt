@@ -3,7 +3,8 @@ package com.canteen.di
 import android.app.Application
 import androidx.databinding.DataBindingComponent
 import com.canteen.CanteenApplication
-import com.canteen.base.bindingAdapters.ViewBindingAdapter
+import com.canteen.base.bindingAdapters.ImageViewBindingAdapter
+import com.canteen.base.bindingAdapters.TextViewBindingAdapter
 import com.canteen.base.di.BaseModule
 import com.canteen.base.di.BindingAdapterModule
 import com.canteen.base.di.ViewModelModule
@@ -44,7 +45,8 @@ import dagger.android.support.AndroidSupportInjectionModule
 )
 interface AppComponent : AndroidInjector<CanteenApplication>, DataBindingComponent {
 
-    override fun getViewBindingAdapter(): ViewBindingAdapter
+    override fun getTextViewBindingAdapter(): TextViewBindingAdapter
+    override fun getImageViewBindingAdapter(): ImageViewBindingAdapter
 
     @Component.Builder
     interface Builder {

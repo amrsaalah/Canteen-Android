@@ -17,6 +17,6 @@ interface EntryDao : BaseDao<Entry> {
     suspend fun getEntriesByApiAndStatus(api: Int, status: Int): List<Entry>
 
     @Query("select * from entries where api = :api ORDER BY createdAt DESC LIMIT 1")
-    suspend fun getLatestEntryByApi(api: Int): Entry
+    suspend fun getLatestEntryByApi(api: Int): Entry?
 
 }

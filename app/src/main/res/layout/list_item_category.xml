@@ -4,6 +4,10 @@
 
     <data>
 
+        <variable
+            name="category"
+            type="com.canteen.presenters.displayModels.category.CategoryItem" />
+
     </data>
 
 
@@ -28,6 +32,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
+                app:imgUrl="@{category.imgUrl}"
+                app:placeholder="@{category.placeholder}"
                 tools:src="@tools:sample/avatars" />
 
 
@@ -42,6 +48,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="2"
+            android:text="@{category.name}"
             android:textColor="@color/black"
             android:textSize="@dimen/sp13"
             app:layout_constraintEnd_toEndOf="@id/cardView"

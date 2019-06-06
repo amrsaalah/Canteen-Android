@@ -15,7 +15,7 @@ import javax.inject.Inject
  */
 
 
-class ViewBindingAdapter @Inject constructor() {
+class TextViewBindingAdapter @Inject constructor() {
 
     @BindingAdapter(
         value = ["firstText", "secondText", "secondColor"],

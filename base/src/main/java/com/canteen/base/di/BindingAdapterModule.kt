@@ -1,6 +1,7 @@
 package com.canteen.base.di
 
-import com.canteen.base.bindingAdapters.ViewBindingAdapter
+import com.canteen.base.bindingAdapters.ImageViewBindingAdapter
+import com.canteen.base.bindingAdapters.TextViewBindingAdapter
 import com.canteen.base.di.scopes.AppScope
 import dagger.Module
 import dagger.Provides
@@ -13,7 +14,13 @@ class BindingAdapterModule {
 
     @Provides
     @AppScope
-    fun provideBidingAdapter(): ViewBindingAdapter {
-        return ViewBindingAdapter()
+    fun provideTextBidingAdapter(): TextViewBindingAdapter {
+        return TextViewBindingAdapter()
+    }
+
+    @Provides
+    @AppScope
+    fun provideImageBidingAdapter(): ImageViewBindingAdapter {
+        return ImageViewBindingAdapter()
     }
 }

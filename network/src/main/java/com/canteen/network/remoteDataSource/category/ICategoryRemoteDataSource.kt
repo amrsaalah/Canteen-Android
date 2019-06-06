@@ -1,5 +1,6 @@
 package com.canteen.network.remoteDataSource.category
 
+import com.canteen.base.response.Resource
 import com.canteen.network.api.CategoryResponse
 
 /**
@@ -7,5 +8,5 @@ import com.canteen.network.api.CategoryResponse
  */
 interface ICategoryRemoteDataSource {
 
-    suspend fun getAllCategories(): CategoryResponse
+    suspend fun getAllCategories(): Resource<List<CategoryResponse>>
 }

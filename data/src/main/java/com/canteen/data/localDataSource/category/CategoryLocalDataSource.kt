@@ -9,6 +9,7 @@ import javax.inject.Inject
  */
 class CategoryLocalDataSource @Inject constructor(private val categoryDao: CategoryDao) : ICategoryLocalDataSource {
 
+
     override suspend fun getAllCategories(): List<Category> {
         return categoryDao.getCategories()
     }
@@ -18,6 +19,7 @@ class CategoryLocalDataSource @Inject constructor(private val categoryDao: Categ
     }
 
     override suspend fun insertAll(entities: List<Category>) {
+        categoryDao.deleteAll()
         return categoryDao.insertAll(entities)
     }
 
