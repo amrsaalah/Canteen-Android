@@ -1,15 +1,14 @@
 package com.canteen.repositories.user
 
 import com.canteen.base.Session
-import com.canteen.base.UpdateUser
 import com.canteen.base.User
-import com.canteen.base.response.Resource
 import com.canteen.data.localDataSource.entry.IEntryLocalDataSource
 import com.canteen.data.preferences.UserPreferences
 import com.canteen.network.api.LoginRequest
-import com.canteen.network.api.LoginResponse
 import com.canteen.network.remoteDataSource.user.IUserRemoteDataSource
 import com.canteen.repositories.BaseRepository
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -25,42 +24,58 @@ class UserRepository @Inject constructor(
 ) : BaseRepository(entryLocalDataSource), IUserRepository {
 
 
-
-    companion object {
-        private const val TAG = "UserRepository"
-    }
-
     init {
         session.currentUser = initUser()
     }
 
 
-    override suspend fun login(username: String, password: String): Resource<LoginResponse> {
-        return userRemoteDataSource.login(LoginRequest(username, password))
+    override suspend fun login(username: String, password: String): Boolean {
+        val response = userRemoteDataSource.login(LoginRequest(username, password))
+        return if (response.status.isSuccessful()) {
+            val user = User("", response.data!!.token, true)
+            updateUser(user)
+            GlobalScope.launch {
+                val userResponse = userRemoteDataSource.getCurrentUser()
+                if (userResponse.status.isSuccessful()) {
+                    val data = userResponse.data!!
+                    val user2 = User(data.name, userPreferences.getUserToken(), true)
+                    updateUser(user2)
+                }
+            }
+            true
+        } else {
+            false
+        }
+    }
+
+    override suspend fun getCurrentUser(): User? {
+        val response = userRemoteDataSource.getCurrentUser()
+        return if (response.status.isSuccessful()) {
+            val data = response.data!!
+            val user = User(data.name, userPreferences.getUserToken(), true)
+            updateUser(user)
+            user
+        } else {
+            null
+        }
     }
 
 
-    override fun createUserIfNotExist(user: User) {
+    override fun updateUser(user: User) {
         if (session.currentUser == null) {
             createUser(user)
-        }
-    }
+        } else {
+            userPreferences.setUserIsVerified(user.isVerified)
+            session.currentUser?.isVerified = user.isVerified
 
-    override fun updateUser(user: UpdateUser) {
-        user.isVerified?.let {
-            userPreferences.setUserIsVerified(it)
-            session.currentUser?.isVerified = it
-        }
+            userPreferences.setUserName(user.name)
+            session.currentUser?.name = user.name
 
-        user.name?.let {
-            userPreferences.setUserName(it)
-            session.currentUser?.name = it
+            userPreferences.setUserToken(user.token)
+            session.currentUser?.token = user.token
         }
 
-        user.token?.let {
-            userPreferences.setUserToken(it)
-            session.currentUser?.token = it
-        }
+
     }
 
     override fun clearUser() {

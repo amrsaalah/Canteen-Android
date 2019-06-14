@@ -16,4 +16,7 @@ interface CategoryDao : BaseDao<Category>{
 
     @Query("DELETE FROM categories")
     fun deleteAll()
+
+    @Query("select * from categories where remoteId = :remoteId")
+    fun getCategoryByRemoteId(remoteId: String): Category?
 }

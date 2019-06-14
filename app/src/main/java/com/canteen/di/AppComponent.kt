@@ -1,6 +1,7 @@
 package com.canteen.di
 
 import android.app.Application
+import android.content.Context
 import androidx.databinding.DataBindingComponent
 import com.canteen.CanteenApplication
 import com.canteen.base.bindingAdapters.ImageViewBindingAdapter
@@ -52,6 +53,9 @@ interface AppComponent : AndroidInjector<CanteenApplication>, DataBindingCompone
     interface Builder {
         @BindsInstance
         fun application(application: Application): Builder
+
+        @BindsInstance
+        fun context(context: Context): Builder
 
         fun build(): AppComponent
     }

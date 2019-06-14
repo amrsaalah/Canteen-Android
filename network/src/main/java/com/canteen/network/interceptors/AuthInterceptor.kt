@@ -22,11 +22,13 @@ class AuthInterceptor @Inject constructor(private val session: Session) : Interc
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
+
+
         val token =
             "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJSb2xlSWQiOiIxIiwiVXNlcklkIjoiMSIsIm5iZiI6MTU1OTg0MDEyOSwiZXhwIjoxNTY1MDI0MTI5LCJpc3MiOiJDYW50ZWVuQVBJIiwiYXVkIjoiQ2FudGVlbkFQSUNsaWVudHMifQ.i_8CXsN7bE6GPr-fzxk8wd0CcmJpkEX65RsKbFs8OrA"
+
         request = request.newBuilder()
-            .addHeader("Authorization", token)
-            //.addHeader("Authorization", "Bearer ${session.currentUser?.token}")
+            .addHeader("Authorization", "Bearer ${session.currentUser?.token}")
             .build()
         return chain.proceed(request)
     }

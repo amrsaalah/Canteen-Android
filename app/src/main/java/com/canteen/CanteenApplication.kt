@@ -34,7 +34,7 @@ class CanteenApplication : DaggerApplication() {
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        val component = DaggerAppComponent.builder().application(this).build()
+        val component = DaggerAppComponent.builder().application(this).context(this).build()
         DataBindingUtil.setDefaultComponent(component)
         component.inject(this)
         return component

@@ -1,7 +1,6 @@
 package com.canteen.login.login
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +14,8 @@ import com.canteen.base.BaseFragment
 import com.canteen.base.extensions.getViewModel
 import com.canteen.base.extensions.showToast
 import com.canteen.databinding.FragmentLoginBinding
+import com.canteen.presenters.user.ValidationError.EMPTY_EMAIL
+import com.canteen.presenters.user.ValidationError.EMPTY_PASSWORD
 import kotlinx.android.synthetic.main.fragment_login.*
 import javax.inject.Inject
 
@@ -38,10 +39,6 @@ class LoginFragment : BaseFragment() {
         getViewModel<LoginViewModel>(requireActivity(), viewModelFactory)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d(TAG, "onCreate: $viewModel")
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,17 +55,35 @@ class LoginFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.login()
-
 
         viewModel.toastMessage.observe(this, Observer {
             showToast(it)
         })
 
+
         txtDontHaveAccount.setOnClickListener {
             val extras = getSharedElementTransitionExtras()
             findNavController().navigate(R.id.registerFragment, null, null, extras)
         }
+
+        viewModel.navigateToHome.observe(this, Observer {
+            if (it) {
+                findNavController().navigate(R.id.dashboardActivity)
+                activity?.finish()
+            }
+        })
+
+        viewModel.validationError.observe(this, Observer {
+            when (it) {
+                EMPTY_EMAIL -> inputLayoutEmail.error = getString(R.string.empty_entry)
+                EMPTY_PASSWORD -> inputLayoutPassword.error = getString(R.string.empty_entry)
+                else -> {
+                    // clear errors
+                    inputLayoutPassword.error = null
+                    inputLayoutEmail.error = null
+                }
+            }
+        })
     }
 
 

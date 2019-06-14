@@ -10,4 +10,13 @@ interface IProductLocalDataSource : BaseLocalDataSource<Product> {
 
     suspend fun getAllProducts(): List<Product>
     suspend fun getProductsByCategoryId(categoryId: Int): List<Product>
+    suspend fun getProductsFilteredList(
+        pageNumber: Int,
+        pageSize: Int,
+        orderBy: String,
+        categoryId: Int? = null,
+        ratingFrom: Double? = null,
+        ratingTo: Double? = null,
+        search: String? = null
+    ): List<Product>
 }

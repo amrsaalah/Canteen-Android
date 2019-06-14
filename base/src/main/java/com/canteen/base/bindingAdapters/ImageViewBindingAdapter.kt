@@ -1,10 +1,14 @@
 package com.canteen.base.bindingAdapters
 
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.canteen.base.extensions.hide
+import com.canteen.base.extensions.show
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -29,6 +33,21 @@ class ImageViewBindingAdapter @Inject constructor() {
         }
 
         Glide.with(imageView.context).load(imgUrl).apply(requestOptions).into(imageView)
+    }
+
+
+    @BindingAdapter("android:visibility")
+    fun setProgressVisibility(progressBar: ProgressBar, isVisible: Boolean?) {
+        Timber.d("$isVisible")
+        if (isVisible != null) {
+            if (isVisible) {
+                progressBar.show()
+            } else {
+                progressBar.hide()
+            }
+        } else {
+            progressBar.hide()
+        }
     }
 
 }

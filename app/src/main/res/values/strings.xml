@@ -9,4 +9,6 @@
     <string name="see_all">See All</string>
     <string name="featured_masters">Trending Products</string>
     <string name="top_masters">New Products</string>
+    <string name="empty_entry">This field is required</string>
+    <string name="invalid_credentials">Wrong email or password</string>
 </resources>

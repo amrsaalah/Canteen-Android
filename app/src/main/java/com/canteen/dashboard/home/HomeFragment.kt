@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.canteen.base.BaseFragment
 import com.canteen.base.extensions.getViewModel
 import com.canteen.databinding.FragmentHomeBinding
@@ -19,15 +18,11 @@ import javax.inject.Inject
  */
 class HomeFragment : BaseFragment() {
 
-    companion object {
-        private const val TAG = "HomeFragment"
-    }
 
     private lateinit var binding: FragmentHomeBinding
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
 
     private val viewModel by lazy {
         getViewModel<HomeViewModel>(requireActivity(), viewModelFactory)
@@ -43,6 +38,8 @@ class HomeFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         return binding.root
     }
 
@@ -50,8 +47,6 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerViewCategories.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         recyclerViewCategories.adapter = categoryAdapter
 
         viewModel.categories.observe(this, Observer {

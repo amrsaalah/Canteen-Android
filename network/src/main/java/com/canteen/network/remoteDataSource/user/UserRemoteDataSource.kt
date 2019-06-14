@@ -3,6 +3,7 @@ package com.canteen.network.remoteDataSource.user
 import com.canteen.base.response.Resource
 import com.canteen.network.api.LoginRequest
 import com.canteen.network.api.LoginResponse
+import com.canteen.network.api.UserResponse
 import com.canteen.network.remoteDataSource.BaseRemoteDataSource
 import com.canteen.network.services.UserService
 import javax.inject.Inject
@@ -12,6 +13,10 @@ import javax.inject.Inject
  */
 class UserRemoteDataSource @Inject constructor(private val userService: UserService) :
     BaseRemoteDataSource(), IUserRemoteDataSource {
+
+    override suspend fun getCurrentUser(): Resource<UserResponse> {
+        return getResource { userService.getCurrentUser() }
+    }
 
     override suspend fun login(request: LoginRequest): Resource<LoginResponse> {
         return getResource { userService.login(request) }

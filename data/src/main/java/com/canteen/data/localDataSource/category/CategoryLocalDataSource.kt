@@ -19,8 +19,38 @@ class CategoryLocalDataSource @Inject constructor(private val categoryDao: Categ
     }
 
     override suspend fun insertAll(entities: List<Category>) {
-        categoryDao.deleteAll()
-        return categoryDao.insertAll(entities)
+        val dbCategories = categoryDao.getCategories()
+
+        val sum = dbCategories + entities
+
+        val group = sum.groupBy { it.remoteId }
+            .filter { it.value.size == 1 }
+            .flatMap { it.value }
+
+        val toBeUpdatedCategories = entities - group
+
+
+        toBeUpdatedCategories.forEach { remoteCategory ->
+            val dbCategory = dbCategories.first {
+                it.remoteId == remoteCategory.remoteId
+            }
+            val update = Category(
+                remoteCategory.name,
+                dbCategory.id,
+                remoteCategory.imgUrl,
+                remoteCategory.remoteId
+            )
+            categoryDao.update(update)
+        }
+
+        group.forEach {
+            if (dbCategories.contains(it)) {
+                categoryDao.delete(it)
+            } else {
+                categoryDao.insert(it)
+            }
+        }
+
     }
 
     override suspend fun update(entity: Category) {

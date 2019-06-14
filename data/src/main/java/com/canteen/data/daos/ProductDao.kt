@@ -2,6 +2,8 @@ package com.canteen.data.daos
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.RawQuery
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.canteen.data.entities.Product
 
 /**
@@ -16,4 +18,7 @@ interface ProductDao : BaseDao<Product>{
 
     @Query("select * from products where categoryId = :categoryId")
     suspend fun getProductByCategoryId(categoryId: Int): List<Product>
+
+    @RawQuery
+    suspend fun getProductsFilteredList(query: SupportSQLiteQuery): List<Product>
 }

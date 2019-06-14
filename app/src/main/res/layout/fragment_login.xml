@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.canteen.login.login.LoginViewModel" />
+            type="com.canteen.login.login.ILoginViewModel" />
 
         <import type="com.canteen.R" />
     </data>
@@ -42,7 +42,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/EditTextStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.email}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -65,7 +66,8 @@
                 style="@style/EditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:text="@={viewModel.password}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,6 +93,7 @@
             android:layout_marginEnd="@dimen/dp10"
             android:padding="@dimen/dp15"
             android:text="@string/Login"
+            android:onClick="@{() -> viewModel.login()}"
             android:transitionName="button" />
 
 
