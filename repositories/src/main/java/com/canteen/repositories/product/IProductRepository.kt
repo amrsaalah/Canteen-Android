@@ -11,4 +11,7 @@ interface IProductRepository {
     suspend fun getProductsFilteredList(productFilter: ProductFilter): List<Product>
     suspend fun syncProducts()
     suspend fun getFavoriteProducts(): List<Product>
+
+    suspend fun likeProduct(productId: Int): Product
+    suspend fun unLikeProduct(productId: Int): Product
 }

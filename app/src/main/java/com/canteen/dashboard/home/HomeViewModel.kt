@@ -7,10 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.canteen.base.BaseViewModel
 import com.canteen.base.Session
 import com.canteen.base.utils.EventBus
+import com.canteen.base.utils.SingleLiveEvent
 import com.canteen.presenters.category.ICategoryPresenter
 import com.canteen.presenters.displayModels.category.CategoryItem
+import com.canteen.presenters.displayModels.product.ProductItem
 import com.canteen.presenters.product.ProductPresenter
-import com.canteen.repositories.product.ProductRepository
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -22,11 +23,11 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val categoryPresenter: ICategoryPresenter,
     private val productPresenter: ProductPresenter,
-    private val productRepository: ProductRepository,
     private val eventBus: EventBus,
     private val session: Session
 ) : BaseViewModel(eventBus),
     IHomeViewModel {
+
 
     override val categories: LiveData<List<CategoryItem>> = liveData {
         loading.value = true
@@ -34,15 +35,22 @@ class HomeViewModel @Inject constructor(
         loading.value = false
     }
 
+    override val topRatedProducts: LiveData<List<ProductItem>> = liveData {
+        emit(productPresenter.getTopRatedProducts())
+    }
+
+    override val notifyFavChange: SingleLiveEvent<ProductItem> = SingleLiveEvent()
     override val loading: MutableLiveData<Boolean> = MutableLiveData()
 
     init {
         Timber.d(session.currentUser.toString())
 
-        viewModelScope.launch {
-            val result = productRepository.getFavoriteProducts()
-            Timber.d(result.toString())
-        }
     }
 
+
+    override fun favButtonClicked(productItem: ProductItem) {
+        viewModelScope.launch {
+            notifyFavChange.value = productPresenter.handleLikeButtonClicked(productItem)
+        }
+    }
 }

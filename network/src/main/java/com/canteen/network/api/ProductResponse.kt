@@ -14,7 +14,7 @@ data class ProductResponse(
     @SerializedName("CategoryId") val categoryId: String,
     @SerializedName("CategoryName") val categoryName: String,
     @SerializedName("Rating") val rating: Double,
-    @SerializedName("FavoriteResponse") val favorites: List<FavoriteResponse>? = null
+    @SerializedName("Favorites") val favorites: List<FavoriteResponse>? = null
 )
 
 

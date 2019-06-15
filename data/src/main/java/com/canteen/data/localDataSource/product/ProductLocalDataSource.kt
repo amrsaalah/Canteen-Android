@@ -11,6 +11,15 @@ import javax.inject.Inject
  * Created by Amr Salah on 5/19/2019.
  */
 class ProductLocalDataSource @Inject constructor(private val productDao: ProductDao) : IProductLocalDataSource {
+
+    override suspend fun getProductById(productId: Int): Product? {
+        return productDao.getProductById(productId)
+    }
+
+    override suspend fun updateProduct(product: Product) {
+        return productDao.update(product)
+    }
+
     override suspend fun getFavoriteProducts(): List<Product> {
         return productDao.getFavoriteProducts()
     }
@@ -111,7 +120,7 @@ class ProductLocalDataSource @Inject constructor(private val productDao: Product
     }
 
 
-    override suspend fun insertOrUpdateFavoriteProducts(products: List<Product>) {
+    override suspend fun insertOrUpdateProducts(products: List<Product>) {
 
         for (product in products) {
             val localProduct = productDao.getProductByProductRemoteId(product.remoteId!!)

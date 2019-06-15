@@ -7,7 +7,9 @@ import com.canteen.data.entities.Product
 import com.canteen.data.localDataSource.category.ICategoryLocalDataSource
 import com.canteen.data.localDataSource.entry.IEntryLocalDataSource
 import com.canteen.data.localDataSource.product.IProductLocalDataSource
+import com.canteen.network.api.ProductFilterRequest
 import com.canteen.network.api.ProductResponse
+import com.canteen.network.api.ProductSearchRequest
 import com.canteen.network.remoteDataSource.product.IProductRemoteDataSource
 import com.canteen.repositories.BaseRepository
 import com.canteen.repositories.ITasksHandler
@@ -34,6 +36,20 @@ class ProductRepository @Inject constructor(
     private val session: Session
 ) : BaseRepository(entryLocalDataSource), IProductRepository {
 
+    override suspend fun likeProduct(productId: Int): Product {
+        val product = productLocalDataSource.getProductById(productId)!!
+        product.isFavorite = true
+        productLocalDataSource.updateProduct(product)
+        return productLocalDataSource.getProductById(productId)!!
+    }
+
+    override suspend fun unLikeProduct(productId: Int): Product {
+        val product = productLocalDataSource.getProductById(productId)!!
+        product.isFavorite = false
+        productLocalDataSource.updateProduct(product)
+        return productLocalDataSource.getProductById(productId)!!
+    }
+
 
     override suspend fun getFavoriteProducts(): List<Product> = withContext(Dispatchers.IO) {
         val api = productRemoteDataSource.getFavoriteProducts()
@@ -42,7 +58,7 @@ class ProductRepository @Inject constructor(
             Timber.d(response.toString())
             val products: List<Product> = response.map { mapRemoteProductToLocal(it) }
 
-            productLocalDataSource.insertOrUpdateFavoriteProducts(products)
+            productLocalDataSource.insertOrUpdateProducts(products)
             val fav = productLocalDataSource.getFavoriteProducts()
             fav
         } else {
@@ -53,26 +69,74 @@ class ProductRepository @Inject constructor(
 
     override suspend fun getProductsFilteredList(productFilter: ProductFilter): List<Product> =
         withContext(Dispatchers.IO) {
-            var orderBy = ""
-            orderBy += when (productFilter.orderBy) {
-                ID -> "remoteId"
-                RATING -> "rating"
-            }
-
-            orderBy += when (productFilter.sortBy) {
-                ASC -> "ASC"
-                DESC -> "DESC"
-            }
-
-            productLocalDataSource.getProductsFilteredList(
+            val request = ProductFilterRequest(
                 productFilter.pageNumber,
                 productFilter.pageSize,
-                orderBy,
-                productFilter.categoryId,
-                productFilter.ratingFrom,
-                productFilter.ratingTo,
-                productFilter.query
+                when (productFilter.orderBy) {
+                    ID -> "ProductId"
+                    RATING -> "Rating"
+                },
+                when (productFilter.sortBy) {
+                    ASC -> "ASC"
+                    DESC -> "DESC"
+                },
+                ProductSearchRequest(
+                    productFilter.query,
+                    if (productFilter.categoryId != null) categoryLocalDataSource.getCategoryById(
+                        productFilter.categoryId
+                    )!!.remoteId else null,
+                    productFilter.ratingFrom,
+                    productFilter.ratingTo
+                )
             )
+            val api = productRemoteDataSource.getProductsFilteredList(request)
+
+            if (api.status.isSuccessful()) {
+                val response = api.data!!
+                val products = response.products.map { mapRemoteProductToLocal(it) }
+                productLocalDataSource.insertOrUpdateProducts(products)
+                var orderBy = ""
+                orderBy += when (productFilter.orderBy) {
+                    ID -> "remoteId"
+                    RATING -> "rating"
+                }
+
+                orderBy += when (productFilter.sortBy) {
+                    ASC -> "ASC"
+                    DESC -> "DESC"
+                }
+
+                productLocalDataSource.getProductsFilteredList(
+                    productFilter.pageNumber,
+                    productFilter.pageSize,
+                    orderBy,
+                    productFilter.categoryId,
+                    productFilter.ratingFrom,
+                    productFilter.ratingTo,
+                    productFilter.query
+                )
+            } else {
+                var orderBy = ""
+                orderBy += when (productFilter.orderBy) {
+                    ID -> "remoteId"
+                    RATING -> "rating"
+                }
+
+                orderBy += when (productFilter.sortBy) {
+                    ASC -> "ASC"
+                    DESC -> "DESC"
+                }
+
+                productLocalDataSource.getProductsFilteredList(
+                    productFilter.pageNumber,
+                    productFilter.pageSize,
+                    orderBy,
+                    productFilter.categoryId,
+                    productFilter.ratingFrom,
+                    productFilter.ratingTo,
+                    productFilter.query
+                )
+            }
         }
 
 
@@ -108,7 +172,7 @@ class ProductRepository @Inject constructor(
             remoteId = response.productId,
             imageUrl = response.imageUrl,
             remoteCategoryId = response.categoryId,
-            isFavorite = if (response.favorites == null) true else response.favorites!!.firstOrNull { fav -> fav.userId == session.currentUser?.id } != null
+            isFavorite = if (response.favorites == null) true else response.favorites!!.any { fav -> fav.userId == session.currentUser?.id }
         )
     }
 

@@ -4,6 +4,7 @@ import com.canteen.network.api.ProductFilterRequest
 import com.canteen.network.api.ProductFilteredListResponse
 import com.canteen.network.api.ProductResponse
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
@@ -13,7 +14,7 @@ import retrofit2.http.POST
 interface ProductService {
 
     @POST("products/filteredList")
-    suspend fun getProductsFilteredList(request: ProductFilterRequest): Response<ProductFilteredListResponse>
+    suspend fun getProductsFilteredList(@Body request: ProductFilterRequest): Response<ProductFilteredListResponse>
 
     @GET("products/getAll")
     suspend fun getAllProducts(): Response<List<ProductResponse>>

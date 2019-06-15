@@ -9,4 +9,5 @@ interface ICategoryRepository {
 
     suspend fun getAllCategories(): List<Category>
     suspend fun syncCategories()
+    suspend fun getCategoryById(categoryId: Int): Category
 }

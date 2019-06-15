@@ -11,4 +11,5 @@
     <string name="top_masters">New Products</string>
     <string name="empty_entry">This field is required</string>
     <string name="invalid_credentials">Wrong email or password</string>
+    <string name="top_rated">Top Rated</string>
 </resources>

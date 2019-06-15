@@ -26,7 +26,11 @@ class CategoryRepository @Inject constructor(
     private val entryLocalDataSource: IEntryLocalDataSource
 ) : BaseRepository(entryLocalDataSource), ICategoryRepository {
 
-    override suspend fun syncCategories() {
+    override suspend fun getCategoryById(categoryId: Int): Category = withContext(Dispatchers.IO) {
+        categoryLocalDataSource.getCategoryById(categoryId)!!
+    }
+
+    override suspend fun syncCategories() = withContext(Dispatchers.IO) {
         val response = categoryRemoteDataSource.getAllCategories()
         if (response.status.isSuccessful()) {
             val categories = response.data!!.map {

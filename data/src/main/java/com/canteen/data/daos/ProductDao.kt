@@ -16,6 +16,9 @@ interface ProductDao : BaseDao<Product>{
     @Query("select * from  products")
      suspend fun getProducts() : List<Product>
 
+    @Query("select * from  products where id = :productId")
+    suspend fun getProductById(productId: Int): Product?
+
     @Query("select * from products where categoryId = :categoryId")
     suspend fun getProductByCategoryId(categoryId: Int): List<Product>
 

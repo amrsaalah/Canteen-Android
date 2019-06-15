@@ -5,6 +5,14 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.canteen.dashboard.home.IHomeViewModel" />
+
+        <variable
+            name="product"
+            type="com.canteen.presenters.displayModels.product.ProductItem" />
+
     </data>
 
     <androidx.cardview.widget.CardView
@@ -28,9 +36,11 @@
                 android:layout_width="@dimen/dp150"
                 android:layout_height="@dimen/dp90"
                 android:scaleType="centerCrop"
+                app:imgUrl="@{product.imgUrl}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:placeholder="@{product.placeholder}"
                 tools:src="@tools:sample/avatars" />
 
 
@@ -42,6 +52,7 @@
                 android:layout_marginTop="@dimen/dp10"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:text="@{product.productName}"
                 android:textColor="@color/dark_grey"
                 android:textSize="@dimen/sp15"
                 app:layout_constraintEnd_toStartOf="@id/imgFav"
@@ -55,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:text="@{product.categoryName}"
                 android:textColor="@color/light_grey"
                 android:textSize="@dimen/sp12"
                 app:layout_constraintEnd_toStartOf="@id/imgFav"
@@ -65,10 +77,12 @@
 
             <ImageView
                 android:id="@+id/imgFav"
+                drawableSrc="@{product.favIcon}"
                 android:layout_width="@dimen/dp18"
                 android:layout_height="@dimen/dp18"
                 android:layout_marginTop="@dimen/dp4"
                 android:layout_marginEnd="@dimen/dp5"
+                android:onClick="@{() -> viewModel.favButtonClicked(product)}"
                 app:layout_constraintBottom_toBottomOf="@id/txtProductName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/txtProductName"
@@ -83,6 +97,7 @@
                 android:layout_marginEnd="@dimen/dp5"
                 android:ellipsize="end"
                 android:maxLines="2"
+                android:text="@{product.productDescription}"
                 android:textColor="@color/dark_grey"
                 android:textSize="@dimen/sp12"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -106,6 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp2"
+                android:text="@{product.rating}"
                 android:textColor="@color/yellow"
                 android:textSize="@dimen/sp11"
                 app:layout_constraintBottom_toBottomOf="@id/imgStar"
@@ -120,6 +136,7 @@
                 android:layout_marginTop="@dimen/dp10"
                 android:layout_marginEnd="@dimen/dp5"
                 android:layout_marginBottom="@dimen/dp5"
+                android:text="@{product.price}"
                 android:textColor="@color/green"
                 android:textSize="@dimen/sp11"
                 app:layout_constraintBottom_toBottomOf="parent"

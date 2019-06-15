@@ -25,6 +25,9 @@ interface IProductLocalDataSource : BaseLocalDataSource<Product> {
     suspend fun getFavoriteProducts(): List<Product>
 
 
-    suspend fun insertOrUpdateFavoriteProducts(products: List<Product>)
+    suspend fun insertOrUpdateProducts(products: List<Product>)
+
+    suspend fun updateProduct(product: Product)
+    suspend fun getProductById(productId: Int): Product?
 
 }

@@ -11,6 +11,7 @@ import com.canteen.base.extensions.show
 import timber.log.Timber
 import javax.inject.Inject
 
+
 /**
  * Created by Amr Salah on 6/6/2019.
  */
@@ -50,4 +51,9 @@ class ImageViewBindingAdapter @Inject constructor() {
         }
     }
 
+    @BindingAdapter("drawableSrc")
+    fun setDrawable(imageView: ImageView, @DrawableRes drawable: Int) {
+        val myDrawable = imageView.context.getDrawable(drawable)
+        imageView.setImageDrawable(myDrawable)
+    }
 }

@@ -138,12 +138,12 @@
                 </androidx.recyclerview.widget.RecyclerView>
 
                 <TextView
-                    android:id="@+id/txtNew"
+                    android:id="@+id/txtTopRated"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp10"
                     android:layout_marginTop="@dimen/dp20"
-                    android:text="@string/top_masters"
+                    android:text="@string/top_rated"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp15"
                     app:layout_constraintStart_toStartOf="parent"
@@ -164,7 +164,7 @@
 
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewNewProducts"
+                    android:id="@+id/recyclerViewTopRatedProducts"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp4"
@@ -176,7 +176,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txtNew"
+                    app:layout_constraintTop_toBottomOf="@id/txtTopRated"
                     app:layout_constraintVertical_bias="0"
                     tools:itemCount="4"
                     tools:listitem="@layout/list_item_product_home">

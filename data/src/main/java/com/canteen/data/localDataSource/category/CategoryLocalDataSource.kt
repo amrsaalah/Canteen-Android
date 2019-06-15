@@ -8,6 +8,9 @@ import javax.inject.Inject
  * Created by Amr Salah on 5/19/2019.
  */
 class CategoryLocalDataSource @Inject constructor(private val categoryDao: CategoryDao) : ICategoryLocalDataSource {
+    override suspend fun getCategoryById(categoryId: Int): Category? {
+        return categoryDao.getCategoryById(categoryId)
+    }
 
 
     override suspend fun getCategoryByRemoteId(categoryRemoteId: String): Category? {

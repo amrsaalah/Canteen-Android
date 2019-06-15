@@ -19,4 +19,7 @@ interface CategoryDao : BaseDao<Category>{
 
     @Query("select * from categories where remoteId = :remoteId")
     fun getCategoryByRemoteId(remoteId: String): Category?
+
+    @Query("select * from categories where id = :categoryId")
+    fun getCategoryById(categoryId: Int): Category?
 }

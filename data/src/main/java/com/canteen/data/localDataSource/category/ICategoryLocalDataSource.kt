@@ -9,6 +9,6 @@ import com.canteen.data.localDataSource.BaseLocalDataSource
 interface ICategoryLocalDataSource : BaseLocalDataSource<Category> {
 
     suspend fun getAllCategories(): List<Category>
-
+    suspend fun getCategoryById(categoryId: Int): Category?
     suspend fun getCategoryByRemoteId(categoryRemoteId: String): Category?
 }

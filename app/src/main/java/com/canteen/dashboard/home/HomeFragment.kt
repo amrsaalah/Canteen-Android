@@ -28,9 +28,8 @@ class HomeFragment : BaseFragment() {
         getViewModel<HomeViewModel>(requireActivity(), viewModelFactory)
     }
 
-    private val categoryAdapter by lazy {
-        CategoryAdapter()
-    }
+    private val categoryAdapter by lazy { CategoryAdapter() }
+    private val productAdapter by lazy { ProductAdapter(viewModel) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,10 +47,20 @@ class HomeFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerViewCategories.adapter = categoryAdapter
+        recyclerViewTopRatedProducts.adapter = productAdapter
 
         viewModel.categories.observe(this, Observer {
             Timber.d(it.toString())
             categoryAdapter.submitList(it)
+        })
+
+        viewModel.topRatedProducts.observe(this, Observer {
+            Timber.d(it.toString())
+            productAdapter.submitList(it)
+        })
+
+        viewModel.notifyFavChange.observe(this, Observer {
+            productAdapter.notifyFavoriteChange(it)
         })
     }
 }

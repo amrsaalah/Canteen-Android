@@ -30,7 +30,7 @@ data class Product(
     @ColumnInfo(name = "remoteId") val remoteId: String? = null,
     @ColumnInfo(name = "remoteCategoryId") val remoteCategoryId: String? = null,
     @ColumnInfo(name = "imageUrl") val imageUrl: String? = null,
-    @ColumnInfo(name = "isFavorite") val isFavorite: Boolean,
+    @ColumnInfo(name = "isFavorite") var isFavorite: Boolean,
     @ColumnInfo(name = "createdAt") val createdAt: Date = Date(),
     @ColumnInfo(name = "updatedAt") val updatedAt: Date? = null,
     @ColumnInfo(name = "deletedAt") val deletedAt: Date? = null
