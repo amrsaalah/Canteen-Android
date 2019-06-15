@@ -41,4 +41,6 @@ class RoomModule{
     fun provideEntryDao(db: CanteenDatabase): EntryDao {
         return db.entryDao()
     }
+
+
 }

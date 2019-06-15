@@ -10,6 +10,7 @@ import com.canteen.base.utils.EventBus
 import com.canteen.presenters.category.ICategoryPresenter
 import com.canteen.presenters.displayModels.category.CategoryItem
 import com.canteen.presenters.product.ProductPresenter
+import com.canteen.repositories.product.ProductRepository
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val categoryPresenter: ICategoryPresenter,
     private val productPresenter: ProductPresenter,
+    private val productRepository: ProductRepository,
     private val eventBus: EventBus,
     private val session: Session
 ) : BaseViewModel(eventBus),
@@ -36,9 +38,10 @@ class HomeViewModel @Inject constructor(
 
     init {
         Timber.d(session.currentUser.toString())
+
         viewModelScope.launch {
-            val categories = productPresenter.getTopRatedProducts()
-            Timber.d(categories.toString())
+            val result = productRepository.getFavoriteProducts()
+            Timber.d(result.toString())
         }
     }
 

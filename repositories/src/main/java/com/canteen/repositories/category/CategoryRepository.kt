@@ -6,6 +6,7 @@ import com.canteen.data.entities.Category
 import com.canteen.data.entities.Entry
 import com.canteen.data.localDataSource.category.ICategoryLocalDataSource
 import com.canteen.data.localDataSource.entry.IEntryLocalDataSource
+import com.canteen.network.api.CategoryResponse
 import com.canteen.network.enums.EApi.GET_CATEGORIES
 import com.canteen.network.remoteDataSource.category.ICategoryRemoteDataSource
 import com.canteen.repositories.BaseRepository
@@ -25,13 +26,23 @@ class CategoryRepository @Inject constructor(
     private val entryLocalDataSource: IEntryLocalDataSource
 ) : BaseRepository(entryLocalDataSource), ICategoryRepository {
 
+    override suspend fun syncCategories() {
+        val response = categoryRemoteDataSource.getAllCategories()
+        if (response.status.isSuccessful()) {
+            val categories = response.data!!.map {
+                mapRemoteToLocal(it)
+            }
+            categoryLocalDataSource.insertAll(categories)
+        }
+    }
+
     override suspend fun getAllCategories(): List<Category> = withContext(Dispatchers.IO) {
         if (shouldFetch(GET_CATEGORIES)) {
             val response = categoryRemoteDataSource.getAllCategories()
             if (response.status.isSuccessful()) {
                 Timber.d("${response.data}")
                 val categories = response.data!!.map {
-                    Category(it.categoryName, remoteId = it.categoryId)
+                    mapRemoteToLocal(it)
                 }
 
                 categoryLocalDataSource.insertAll(categories)
@@ -51,4 +62,8 @@ class CategoryRepository @Inject constructor(
         }
     }
 
+
+    private fun mapRemoteToLocal(response: CategoryResponse): Category {
+        return Category(response.categoryName, remoteId = response.categoryId)
+    }
 }

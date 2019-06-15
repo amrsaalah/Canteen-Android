@@ -9,4 +9,6 @@ import com.canteen.repositories.data.product.ProductFilter
 interface IProductRepository {
 
     suspend fun getProductsFilteredList(productFilter: ProductFilter): List<Product>
+    suspend fun syncProducts()
+    suspend fun getFavoriteProducts(): List<Product>
 }

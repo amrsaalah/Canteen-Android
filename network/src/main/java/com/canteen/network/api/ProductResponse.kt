@@ -12,5 +12,14 @@ data class ProductResponse(
     @SerializedName("Image") val imageUrl: String,
     @SerializedName("UnitPrice") val price: Double,
     @SerializedName("CategoryId") val categoryId: String,
-    @SerializedName("Rating") val rating: Double
+    @SerializedName("CategoryName") val categoryName: String,
+    @SerializedName("Rating") val rating: Double,
+    @SerializedName("FavoriteResponse") val favorites: List<FavoriteResponse>? = null
+)
+
+
+data class FavoriteResponse(
+    @SerializedName("FavoriteId") val favoriteId: String,
+    @SerializedName("ProductId") val productId: String,
+    @SerializedName("UserId") val userId: String
 )

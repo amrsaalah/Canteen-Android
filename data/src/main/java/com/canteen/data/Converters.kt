@@ -18,4 +18,28 @@ class Converters {
     fun dateToTimestamp(date: Date?): Long? {
         return (if (date == null) null else date.time)?.toLong()
     }
+
+//    @TypeConverter
+//    fun fromFavorites(favorites: List<Favorite>?): String? {
+//        if (favorites == null) {
+//            return null
+//        }
+//        val gson = Gson()
+//        val type = object : TypeToken<List<Favorite>>() {}.type
+//
+//        return gson.toJson(favorites, type)
+//    }
+//
+//    @TypeConverter
+//    fun toFavorites(value: String?): List<Favorite>? {
+//        if (value == null) {
+//            return null
+//        }
+//        val gson = Gson()
+//        val type = object : TypeToken<List<Favorite>>() {
+//
+//        }.type
+//        return gson.fromJson<List<Favorite>>(value, type)
+//    }
+
 }

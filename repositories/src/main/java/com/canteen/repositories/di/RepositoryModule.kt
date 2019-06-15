@@ -24,4 +24,5 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindProductRepository(productRepository: ProductRepository): IProductRepository
+
 }

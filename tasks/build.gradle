@@ -14,7 +14,7 @@ android {
 dependencies {
 
     api project(":base")
-    api project(":data")
+    api project(":repositories")
 
 
     implementation "com.google.dagger:dagger:$daggerVersion"

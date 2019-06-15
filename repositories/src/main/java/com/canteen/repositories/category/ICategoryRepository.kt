@@ -8,4 +8,5 @@ import com.canteen.data.entities.Category
 interface ICategoryRepository {
 
     suspend fun getAllCategories(): List<Category>
+    suspend fun syncCategories()
 }

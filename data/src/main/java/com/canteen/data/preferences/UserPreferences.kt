@@ -16,10 +16,16 @@ class UserPreferences @Inject constructor(
         private const val USER_NAME = "user_name"
         private const val USER_TOKEN = "user_token"
         private const val USER_IS_VERIFIED = "user_is_verified"
+        private const val USER_ID = "user_id"
     }
 
     private val editor = preferences.edit()
 
+    fun setUserId(userId: String?) {
+        editor.putString(USER_ID, userId).commit()
+    }
+
+    fun getUserId() = preferences.getString(USER_ID, null)
 
     fun setUserName(name: String?) {
         editor.putString(USER_NAME, name).commit()

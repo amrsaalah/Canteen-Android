@@ -21,4 +21,10 @@ interface ProductDao : BaseDao<Product>{
 
     @RawQuery
     suspend fun getProductsFilteredList(query: SupportSQLiteQuery): List<Product>
+
+    @Query("select * from products where remoteId = :productRemoteId")
+    suspend fun getProductByProductRemoteId(productRemoteId: String): Product?
+
+    @Query("select * from products where isFavorite = 1")
+    suspend fun getFavoriteProducts(): List<Product>
 }

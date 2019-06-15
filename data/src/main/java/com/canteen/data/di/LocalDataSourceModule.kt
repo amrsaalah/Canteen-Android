@@ -25,4 +25,6 @@ abstract class LocalDataSourceModule {
 
     @Binds
     abstract fun bindEntry(source: EntryLocalDataSource): IEntryLocalDataSource
+
+
 }

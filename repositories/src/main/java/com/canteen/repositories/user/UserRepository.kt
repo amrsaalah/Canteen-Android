@@ -7,8 +7,6 @@ import com.canteen.data.preferences.UserPreferences
 import com.canteen.network.api.LoginRequest
 import com.canteen.network.remoteDataSource.user.IUserRemoteDataSource
 import com.canteen.repositories.BaseRepository
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -32,15 +30,14 @@ class UserRepository @Inject constructor(
     override suspend fun login(username: String, password: String): Boolean {
         val response = userRemoteDataSource.login(LoginRequest(username, password))
         return if (response.status.isSuccessful()) {
-            val user = User("", response.data!!.token, true)
+            val user = User("", "", response.data!!.token, true)
             updateUser(user)
-            GlobalScope.launch {
-                val userResponse = userRemoteDataSource.getCurrentUser()
-                if (userResponse.status.isSuccessful()) {
-                    val data = userResponse.data!!
-                    val user2 = User(data.name, userPreferences.getUserToken(), true)
-                    updateUser(user2)
-                }
+
+            val userResponse = userRemoteDataSource.getCurrentUser()
+            if (userResponse.status.isSuccessful()) {
+                val data = userResponse.data!!
+                val user2 = User(data.userId, data.name, userPreferences.getUserToken(), true)
+                updateUser(user2)
             }
             true
         } else {
@@ -52,7 +49,7 @@ class UserRepository @Inject constructor(
         val response = userRemoteDataSource.getCurrentUser()
         return if (response.status.isSuccessful()) {
             val data = response.data!!
-            val user = User(data.name, userPreferences.getUserToken(), true)
+            val user = User(data.userId, data.name, userPreferences.getUserToken(), true)
             updateUser(user)
             user
         } else {
@@ -73,6 +70,9 @@ class UserRepository @Inject constructor(
 
             userPreferences.setUserToken(user.token)
             session.currentUser?.token = user.token
+
+            userPreferences.setUserId(user.id)
+            session.currentUser?.id = user.id
         }
 
 
@@ -88,9 +88,10 @@ class UserRepository @Inject constructor(
         val name = userPreferences.getUserName()
         val token = userPreferences.getUserToken()
         val isVerified = userPreferences.getUserIsVerified()
+        val userId = userPreferences.getUserId()
 
-        if (name != null && token != null) {
-            return User(name, token, isVerified)
+        if (userId != null && name != null && token != null) {
+            return User(userId, name, token, isVerified)
         }
 
         return null
@@ -100,6 +101,7 @@ class UserRepository @Inject constructor(
         userPreferences.setUserIsVerified(user.isVerified)
         userPreferences.setUserName(user.name)
         userPreferences.setUserToken(user.token)
+        userPreferences.setUserId(user.id)
         session.currentUser = user
     }
 

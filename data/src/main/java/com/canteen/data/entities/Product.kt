@@ -24,13 +24,17 @@ data class Product(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "description") val description: String,
     @ColumnInfo(name = "categoryId") val categoryId: Int,
-    @ColumnInfo(name = "price") val price: Double,
-    @ColumnInfo(name = "rating") val rating: Double,
+    @ColumnInfo(name = "price") val price: Double = 0.0,
+    @ColumnInfo(name = "rating") val rating: Double = 0.0,
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") override val id: Int = 0,
     @ColumnInfo(name = "remoteId") val remoteId: String? = null,
     @ColumnInfo(name = "remoteCategoryId") val remoteCategoryId: String? = null,
     @ColumnInfo(name = "imageUrl") val imageUrl: String? = null,
+    @ColumnInfo(name = "isFavorite") val isFavorite: Boolean,
     @ColumnInfo(name = "createdAt") val createdAt: Date = Date(),
     @ColumnInfo(name = "updatedAt") val updatedAt: Date? = null,
     @ColumnInfo(name = "deletedAt") val deletedAt: Date? = null
+
 ) : BaseEntity
+
+

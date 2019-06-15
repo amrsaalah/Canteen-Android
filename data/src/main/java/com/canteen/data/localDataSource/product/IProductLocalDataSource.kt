@@ -19,4 +19,12 @@ interface IProductLocalDataSource : BaseLocalDataSource<Product> {
         ratingTo: Double? = null,
         search: String? = null
     ): List<Product>
+
+    suspend fun getProductByProductRemoteId(remoteId: String): Product?
+
+    suspend fun getFavoriteProducts(): List<Product>
+
+
+    suspend fun insertOrUpdateFavoriteProducts(products: List<Product>)
+
 }

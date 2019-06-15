@@ -1,5 +1,9 @@
 package com.canteen.tasks.di
 
+import com.canteen.base.di.scopes.AppScope
+import com.canteen.repositories.ITasksHandler
+import com.canteen.tasks.TasksHandler
+import com.canteen.tasks.workers.SyncWorker
 import com.canteen.tasks.workers.TestWorker
 import dagger.Binds
 import dagger.Module
@@ -16,5 +20,15 @@ abstract class WorkersModule {
     @WorkerKey(TestWorker::class)
     abstract fun bindTestWorker(factory: TestWorker.Factory): ChildWorkerFactory
 
+
+    @Binds
+    @IntoMap
+    @WorkerKey(SyncWorker::class)
+    abstract fun bindSyncWorker(factory: SyncWorker.Factory): ChildWorkerFactory
+
+
+    @Binds
+    @AppScope
+    abstract fun bindTaskHandler(tasksHandler: TasksHandler): ITasksHandler
 
 }

@@ -11,6 +11,13 @@ import javax.inject.Inject
  * Created by Amr Salah on 5/19/2019.
  */
 class ProductLocalDataSource @Inject constructor(private val productDao: ProductDao) : IProductLocalDataSource {
+    override suspend fun getFavoriteProducts(): List<Product> {
+        return productDao.getFavoriteProducts()
+    }
+
+    override suspend fun getProductByProductRemoteId(remoteId: String): Product? {
+        return productDao.getProductByProductRemoteId(remoteId)
+    }
 
 
     override suspend fun getAllProducts(): List<Product> {
@@ -26,7 +33,35 @@ class ProductLocalDataSource @Inject constructor(private val productDao: Product
     }
 
     override suspend fun insertAll(entities: List<Product>) {
-        return productDao.insertAll(entities)
+        val dbProducts = productDao.getProducts()
+
+        val sum = dbProducts + entities
+
+        val group = sum.groupBy { it.remoteId }
+            .filter { it.value.size == 1 }
+            .flatMap { it.value }
+
+        val toBeUpdatedProducts = entities - group
+
+
+        toBeUpdatedProducts.forEach { remoteProduct ->
+            val dbProduct = dbProducts.first {
+                it.remoteId == remoteProduct.remoteId
+            }
+            val update =
+                updateProductWithLocalIds(remoteProduct, dbProduct.id, dbProduct.categoryId)
+
+            productDao.update(update)
+        }
+
+        group.forEach {
+            if (dbProducts.contains(it)) {
+                productDao.delete(it)
+            } else {
+                productDao.insert(it)
+            }
+        }
+
     }
 
     override suspend fun update(entity: Product) {
@@ -75,4 +110,38 @@ class ProductLocalDataSource @Inject constructor(private val productDao: Product
         return productDao.getProductsFilteredList(query)
     }
 
+
+    override suspend fun insertOrUpdateFavoriteProducts(products: List<Product>) {
+
+        for (product in products) {
+            val localProduct = productDao.getProductByProductRemoteId(product.remoteId!!)
+            if (localProduct == null) {
+                productDao.insert(product)
+            } else {
+                val update =
+                    updateProductWithLocalIds(product, localProduct.id, localProduct.categoryId)
+                productDao.update(update)
+            }
+        }
+    }
+
+
+    private fun updateProductWithLocalIds(
+        remoteProduct: Product,
+        id: Int,
+        categoryId: Int
+    ): Product {
+        return Product(
+            remoteProduct.name,
+            remoteProduct.description,
+            categoryId,
+            remoteProduct.price,
+            remoteProduct.rating,
+            id,
+            remoteProduct.remoteId,
+            remoteProduct.remoteCategoryId,
+            remoteProduct.imageUrl,
+            isFavorite = remoteProduct.isFavorite
+        )
+    }
 }

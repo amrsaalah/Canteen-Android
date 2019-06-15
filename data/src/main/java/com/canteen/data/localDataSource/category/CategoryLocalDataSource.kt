@@ -10,6 +10,11 @@ import javax.inject.Inject
 class CategoryLocalDataSource @Inject constructor(private val categoryDao: CategoryDao) : ICategoryLocalDataSource {
 
 
+    override suspend fun getCategoryByRemoteId(categoryRemoteId: String): Category? {
+        return categoryDao.getCategoryByRemoteId(categoryRemoteId)
+    }
+
+
     override suspend fun getAllCategories(): List<Category> {
         return categoryDao.getCategories()
     }
