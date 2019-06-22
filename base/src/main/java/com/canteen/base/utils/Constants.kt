@@ -6,11 +6,11 @@ package com.canteen.base.utils
 class Constants {
 
     companion object {
-        const val CONNECT_TIMEOUT: Long = 60 * 1000
+        const val CONNECT_TIMEOUT: Long = 20
 
-        const val READ_TIMEOUT: Long = 60 * 1000
+        const val READ_TIMEOUT: Long = 20
 
-        const val WRITE_TIMEOUT: Long = 60 * 1000
+        const val WRITE_TIMEOUT: Long = 20
 
     }
 }

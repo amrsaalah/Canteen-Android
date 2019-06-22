@@ -23,6 +23,10 @@ android {
 
     }
 
+    kotlinOptions.freeCompilerArgs += [
+            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"]
+
     dexOptions {
         javaMaxHeapSize "8g"
     }

@@ -60,7 +60,7 @@ class HomeFragment : BaseFragment() {
         })
 
         viewModel.notifyFavChange.observe(this, Observer {
-            productAdapter.notifyFavoriteChange(it)
+            productAdapter.notifyItemChanged(it)
         })
     }
 }

@@ -6,6 +6,7 @@ import androidx.work.WorkerParameters
 import com.canteen.tasks.di.ChildWorkerFactory
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
+import timber.log.Timber
 
 /**
  * Created by Amr Salah on 5/20/2019.
@@ -23,6 +24,7 @@ class TestWorker @AssistedInject constructor(
 
 
     override suspend fun doWork(): Result {
+        Timber.d("do work test worker")
         return Result.success()
     }
 

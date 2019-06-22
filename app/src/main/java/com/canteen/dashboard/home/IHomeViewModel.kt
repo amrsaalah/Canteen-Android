@@ -16,7 +16,7 @@ interface IHomeViewModel : IBaseViewModel {
 
     val topRatedProducts: LiveData<List<ProductItem>>
 
-    val notifyFavChange: SingleLiveEvent<ProductItem>
+    val notifyFavChange: SingleLiveEvent<Int>
 
     fun favButtonClicked(productItem: ProductItem)
 }

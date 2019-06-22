@@ -19,4 +19,13 @@ interface EntryDao : BaseDao<Entry> {
     @Query("select * from entries where api = :api ORDER BY createdAt DESC LIMIT 1")
     suspend fun getLatestEntryByApi(api: Int): Entry?
 
+    @Query("select * from entries where status = :status")
+    suspend fun getEntriesByStatus(status: Int): List<Entry>
+
+
+    @Query("select * from entries where id = :entryId")
+    suspend fun getEntryById(entryId: Int): Entry?
+
+    @Query("delete from entries where api = :api")
+    suspend fun deleteFromEntriesByApi(api: Int)
 }

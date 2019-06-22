@@ -14,4 +14,7 @@ interface IProductRepository {
 
     suspend fun likeProduct(productId: Int): Product
     suspend fun unLikeProduct(productId: Int): Product
+
+    suspend fun syncAddProductToFavorite(entryId: Int, remoteProductId: String)
+    suspend fun syncRemoteProductFromFavorite(entryId: Int, remoteProductId: String)
 }

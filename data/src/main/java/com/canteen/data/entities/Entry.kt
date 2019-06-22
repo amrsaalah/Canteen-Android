@@ -13,6 +13,7 @@ data class Entry(
     @ColumnInfo(name = "api") val api: Int,
     @ColumnInfo(name = "request") val request: String,
     @ColumnInfo(name = "status") val status: Int,
+    @ColumnInfo(name = "queryParams") val queryParams: String,
     @ColumnInfo(name = "createdAt") val createdAt: Date = Date(),
     @ColumnInfo(name = "updatedAt") val updatedAt: Date? = null,
     @ColumnInfo(name = "deletedAt") val deletedAt: Date? = null,

@@ -16,4 +16,7 @@ interface IProductRemoteDataSource {
     suspend fun getFavoriteProducts(): Resource<List<ProductResponse>>
 
     suspend fun getProductsFilteredList(request: ProductFilterRequest): Resource<ProductFilteredListResponse>
+
+    suspend fun addProductToFavorite(remoteProductId: String): Resource<Any>
+    suspend fun removeProductFromFavorite(remoteProductId: String): Resource<Any>
 }

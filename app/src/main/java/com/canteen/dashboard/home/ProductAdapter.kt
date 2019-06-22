@@ -31,15 +31,4 @@ class ProductAdapter(private val homeViewModel: IHomeViewModel) : BaseListAdapte
             binding.executePendingBindings()
         }
     }
-
-
-    fun notifyFavoriteChange(productItem: ProductItem) {
-        val product = items.firstOrNull { it.productId == productItem.productId }
-        if (product != null) {
-            val pos = items.indexOf(product)
-            product.isFavorite = productItem.isFavorite
-            product.favIcon = productItem.favIcon
-            notifyItemChanged(pos)
-        }
-    }
 }

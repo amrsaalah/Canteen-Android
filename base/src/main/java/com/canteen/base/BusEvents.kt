@@ -7,4 +7,9 @@ sealed class BusEvents {
 
     data class ErrorEvent(val message: String) : BusEvents()
 
+    data class ProductFavoriteChangeEvent(
+        val productId: Int,
+        val isFavorite: Boolean,
+        val favIcon: Int
+    ) : BusEvents()
 }

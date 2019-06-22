@@ -52,9 +52,10 @@ class CategoryRepository @Inject constructor(
                 categoryLocalDataSource.insertAll(categories)
                 entryLocalDataSource.insert(
                     Entry(
-                        GET_CATEGORIES.ordinal,
+                        GET_CATEGORIES.id,
                         "",
-                        Status.SUCCESS.ordinal
+                        Status.SUCCESS.ordinal,
+                        ""
                     )
                 )
                 categoryLocalDataSource.getAllCategories()

@@ -3,8 +3,10 @@ package com.canteen.tasks
 import androidx.work.*
 import com.canteen.base.Session
 import com.canteen.repositories.ITasksHandler
+import com.canteen.tasks.workers.SyncQueueWorker
 import com.canteen.tasks.workers.SyncWorker
 import com.canteen.tasks.workers.TestWorker
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -17,8 +19,13 @@ class TasksHandler @Inject constructor(
     private val session: Session
 ) : ITasksHandler {
 
-    override suspend fun fav() {
-        TODO()
+    override suspend fun startSyncQueue() {
+        Timber.d("sync queue started")
+        val request = OneTimeWorkRequest.Builder(SyncQueueWorker::class.java)
+            .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
+            .build()
+
+        workManager.enqueueUniqueWork(SyncQueueWorker.TAG, ExistingWorkPolicy.REPLACE, request)
     }
 
 

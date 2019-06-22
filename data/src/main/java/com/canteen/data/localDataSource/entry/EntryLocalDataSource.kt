@@ -9,6 +9,17 @@ import javax.inject.Inject
  */
 class EntryLocalDataSource @Inject constructor(private val entryDao: EntryDao) :
     IEntryLocalDataSource {
+    override suspend fun deleteFromEntriesByApi(api: Int) {
+        return entryDao.deleteFromEntriesByApi(api)
+    }
+
+    override suspend fun getEntryById(entryId: Int): Entry? {
+        return entryDao.getEntryById(entryId)
+    }
+
+    override suspend fun getEntriesByStatus(status: Int): List<Entry> {
+        return entryDao.getEntriesByStatus(status)
+    }
 
     override suspend fun insert(entity: Entry) = entryDao.insert(entity)
 

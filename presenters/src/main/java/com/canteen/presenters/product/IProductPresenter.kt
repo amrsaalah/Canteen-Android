@@ -8,5 +8,5 @@ import com.canteen.presenters.displayModels.product.ProductItem
 interface IProductPresenter {
 
     suspend fun getTopRatedProducts(): List<ProductItem>
-    suspend fun handleLikeButtonClicked(productItem: ProductItem): ProductItem
+    suspend fun handleLikeButtonClicked(productItem: ProductItem)
 }

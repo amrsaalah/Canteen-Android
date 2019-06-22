@@ -7,6 +7,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 /**
  * Created by Amr Salah on 5/31/2019.
@@ -21,5 +22,11 @@ interface ProductService {
 
     @GET("favorites/getMyFavorites")
     suspend fun getFavoriteProducts(): Response<List<ProductResponse>>
+
+    @POST("favorites/add/{ProductId}")
+    suspend fun addToProductToFavorite(@Path("ProductId") productId: String): Response<Any>
+
+    @POST("favorites/remove/{ProductId}")
+    suspend fun removeProductFromFavorite(@Path("ProductId") productId: String): Response<Any>
 
 }

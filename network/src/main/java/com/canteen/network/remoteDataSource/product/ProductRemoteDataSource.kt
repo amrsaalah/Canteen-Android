@@ -13,6 +13,13 @@ import javax.inject.Inject
  */
 class ProductRemoteDataSource @Inject constructor(private val productService: ProductService) :
     BaseRemoteDataSource(), IProductRemoteDataSource {
+    override suspend fun addProductToFavorite(remoteProductId: String): Resource<Any> {
+        return getResource { productService.addToProductToFavorite(remoteProductId) }
+    }
+
+    override suspend fun removeProductFromFavorite(remoteProductId: String): Resource<Any> {
+        return getResource { productService.removeProductFromFavorite(remoteProductId) }
+    }
 
     override suspend fun getProductsFilteredList(request: ProductFilterRequest): Resource<ProductFilteredListResponse> {
         return getResource { productService.getProductsFilteredList(request) }

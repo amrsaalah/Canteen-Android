@@ -1,5 +1,6 @@
 package com.canteen.presenters.product
 
+import com.canteen.base.BusEvents
 import com.canteen.base.utils.EventBus
 import com.canteen.base.utils.ResourceProvider
 import com.canteen.data.entities.Product
@@ -11,6 +12,9 @@ import com.canteen.repositories.data.product.EProductSort
 import com.canteen.repositories.data.product.ProductFilter
 import com.canteen.repositories.product.IProductRepository
 import com.canteen.repositories.user.IUserRepository
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -24,12 +28,23 @@ class ProductPresenter @Inject constructor(
     private val resourceProvider: ResourceProvider
 ) : IProductPresenter {
 
-    override suspend fun handleLikeButtonClicked(productItem: ProductItem): ProductItem {
-        return if (productItem.isFavorite) {
-            mapProductToProductItem(productRepository.unLikeProduct(productItem.productId))
-        } else {
-            mapProductToProductItem(productRepository.likeProduct(productItem.productId))
+
+    init {
+        GlobalScope.launch {
+            eventBus.asChannel<Product>().consumeEach {
+                eventBus.send(mapProductToProductFavChangeEvent(it))
+            }
         }
+    }
+
+    override suspend fun handleLikeButtonClicked(productItem: ProductItem) {
+        val productChange = if (productItem.isFavorite) {
+            mapProductToProductFavChangeEvent(productRepository.unLikeProduct(productItem.productId))
+        } else {
+            mapProductToProductFavChangeEvent(productRepository.likeProduct(productItem.productId))
+        }
+
+        eventBus.send(productChange)
     }
 
     override suspend fun getTopRatedProducts(): List<ProductItem> {
@@ -48,9 +63,22 @@ class ProductPresenter @Inject constructor(
             product.rating.toString(),
             product.imageUrl,
             product.isFavorite,
-            if (product.isFavorite) R.drawable.red_heart else R.drawable.heart,
+            getFavIconFromFavoriteState(product.isFavorite),
             R.drawable.placeholder
         )
     }
 
+
+    private fun mapProductToProductFavChangeEvent(product: Product): BusEvents.ProductFavoriteChangeEvent {
+        return BusEvents.ProductFavoriteChangeEvent(
+            product.id,
+            product.isFavorite,
+            getFavIconFromFavoriteState(product.isFavorite)
+        )
+    }
+
+
+    private fun getFavIconFromFavoriteState(isFav: Boolean): Int {
+        return if (isFav) R.drawable.red_heart else R.drawable.heart
+    }
 }

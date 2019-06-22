@@ -14,7 +14,7 @@ android {
     buildTypes {
 
         debug {
-            buildConfigField "String", "API_BASE_URL", "\"http://192.168.1.104:2000/api/\""
+            buildConfigField "String", "API_BASE_URL", "\"http://192.168.1.100:2000/api/\""
         }
 
         release {
