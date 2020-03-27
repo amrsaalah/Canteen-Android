@@ -16,6 +16,7 @@ import com.canteen.data.preferences.PreferencesModule
 import com.canteen.login.LoginModule
 import com.canteen.network.di.NetworkModule
 import com.canteen.presenters.di.PresenterModule
+import com.canteen.product.ProductModule
 import com.canteen.repositories.di.RepositoryModule
 import com.canteen.tasks.di.TasksModule
 import dagger.BindsInstance
@@ -40,7 +41,8 @@ import dagger.android.support.AndroidSupportInjectionModule
         BindingAdapterModule::class,
         PresenterModule::class,
         DashboardModule::class,
-        LoginModule::class
+        LoginModule::class,
+        ProductModule::class
 
     ]
 )

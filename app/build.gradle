@@ -74,7 +74,7 @@ android {
 }
 
 dependencies {
-
+    implementation project(":product")
     implementation project(":base")
     implementation project(":data")
     implementation project(":tasks")
