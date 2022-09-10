@@ -6,7 +6,7 @@ This is a simple Canteen managment system android app.It is an offline first mul
 
 ![arch pic](https://user-images.githubusercontent.com/27920087/59968114-84c74280-9534-11e9-9952-464fa22bf370.PNG)
 
-### Libraries
+## Libraries
 
 * Dagger2
 * ViewModel
